@@ -44,6 +44,14 @@ class Boards extends Component {
         });
     }
 
+    removeItem = (id) => {
+        const newBoard = [...this.state.boards];
+        // TODO: remove item by ID
+       let index = newBoard.findIndex((i) => i.id === id)
+       newBoard = [...newBoard.slice(0, index).concat(...newBoard.slice(index+1))];
+       this.setState({Boards: newBoard})
+    }
+
     setModalVisible(visible) {
         this.setState({ modalVisible: visible });
     }
