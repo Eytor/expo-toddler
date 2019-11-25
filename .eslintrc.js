@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    //'prettier'
   ],
   globals: {
     Atomics: 'readonly',
@@ -20,6 +21,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    //'prettier'
   ],
   rules: {
     "quotes": [2, "single"],
@@ -33,10 +35,13 @@ module.exports = {
     "no-self-compare": 1,
     "brace-style": [1, "1tbs", { "allowSingleLine": true }],
     "camelcase": [1, { properties: "always" }],
-    "indent": [1, 4, { "SwitchCase": 1 }],
     "space-before-blocks": [2, "always"],
     "block-spacing": [2, "always"],
     "no-duplicate-imports": 2,
-    "no-unused-vars": 2
+    "no-unused-vars": 2,
+    "no-use-before-define": "off",
+    "react/jsx-filename-extension": "off",
+    "import/no-unresolved": "off",
+    //"prettier/prettier": ["error"]
   },
 };
