@@ -28,10 +28,9 @@ class Boards extends Component {
     // eslint-disable-next-line react/sort-comp
     addToData() {
         const newBoard = [...this.state.boards];
-        console.log(newBoard);
-        // TODO: get new id
+        const newId = newBoard[newBoard.length - 1] + 1;
         newBoard.push({
-            id: 4,
+            id: newId,
             name: this.state.name,
             description: this.state.description,
             thumbnailPhoto: this.state.thumbnailPhoto,
