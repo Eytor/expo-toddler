@@ -71,6 +71,16 @@ class Boards extends Component {
                 >
                     <View style={{ marginTop: 22 }}>
                         <View>
+                            <TouchableOpacity
+                                onPress={() => this.setState({
+                                    name: null,
+                                    description: null,
+                                    thumbnailPhoto: null,
+                                    modalVisible: false,
+                                })}
+                            >
+                                <Text>x</Text>
+                            </TouchableOpacity>
                             <Text>Name</Text>
                             <TextInput
                                 style={{
