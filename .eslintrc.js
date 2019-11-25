@@ -29,6 +29,7 @@ module.exports = {
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2,
+    "react/jsx-indent-props": 0,
     "no-invalid-regexp": 2,
     "no-empty-function": 1,
     "no-invalid-this": 1,
