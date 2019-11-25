@@ -77,51 +77,60 @@ class Boards extends Component {
                         Alert.alert('Modal has been closed.');
                     }}
                 >
-                    <View style={{ marginTop: 22 }}>
+                    <View style={styles.modalWrapper}>
+                        <Text style={styles.heading}>Add new item</Text>
                         <View>
-                            <Text>Name</Text>
-                            <TextInput
-                                style={{
-                                    height: 40,
-                                    borderColor: 'gray',
-                                    borderWidth: 1,
-                                }}
-                                label="Name"
-                                onChangeText={(name) => this.setState({ name })}
-                                value={this.state.name}
-                            />
-                            <Text>Description</Text>
-                            <TextInput
-                                style={{
-                                    height: 40,
-                                    borderColor: 'gray',
-                                    borderWidth: 1,
-                                }}
-                                label="Description"
-                                onChangeText={(description) => this.setState({ description })}
-                                value={this.state.description}
-                            />
-                            <Text>Thumbnail Photo</Text>
-                            <TextInput
-                                style={{
-                                    height: 40,
-                                    borderColor: 'gray',
-                                    borderWidth: 1,
-                                }}
-                                label="Thumbnail Photo"
-                                onChangeText={(thumbnailPhoto) => this.setState({ thumbnailPhoto })}
-                                value={this.state.thumbnailPhoto}
-                            />
-                            <Button
-                                disabled={
-                                    !this.state.name
-                                    || !this.state.thumbnailPhoto
-                                }
-                                onPress={this.addToData}
-                                title="add data"
-                            />
+                            <TouchableOpacity
+                                onPress={() => this.setState({
+                                    name: null,
+                                    description: null,
+                                    thumbnailPhoto: null,
+                                    modalVisible: false,
+                                })}
+                            >
+                                <Text style={styles.btnCloseModal}>x</Text>
+                            </TouchableOpacity>
+                            <View style={styles.formGroup}>
+
+                                <Text style={styles.modalLabel}>Name</Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    label="Name"
+                                    onChangeText={(name) => this.setState({ name })}
+                                    value={this.state.name}
+                                />
+                            </View>
+                            <View style={styles.formGroup}>
+                                
+                                <Text style={styles.modalLabel}>Description</Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    label="Description"
+                                    onChangeText={(description) => this.setState({ description })}
+                                    value={this.state.description}
+                                />
+                            </View>
+                            <View style={styles.formGroup}>
+                                
+                                <Text style={styles.modalLabel}>Thumbnail Photo</Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    label="Thumbnail Photo"
+                                    onChangeText={(thumbnailPhoto) => this.setState({ thumbnailPhoto })}
+                                    value={this.state.thumbnailPhoto}
+                                />
+                            </View>
                         </View>
                     </View>
+                    <Button
+                        disabled={
+                            !this.state.name
+                            || !this.state.thumbnailPhoto
+                        }
+                        onPress={this.addToData}
+                        style={styles.btn}
+                        title="Add item"
+                    />
                 </Modal>
                 <View style={styles.container}>
                     <Text style={styles.heading}>List of boards:</Text>
@@ -143,7 +152,7 @@ class Boards extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00A6FB',
+        backgroundColor: '#FFA400',
         width: '100%',
         padding: 30,
         paddingLeft: 15,
@@ -178,6 +187,40 @@ const styles = StyleSheet.create({
     boardListItemText: {
         fontSize: 16,
         color: '#303030',
+    },
+
+    modalWrapper: {
+        flex: 1,
+        padding: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
+        backgroundColor: '#FFA400',
+    },
+
+    btnCloseModal: {
+        textTransform: "uppercase",
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    formGroup: {
+        marginBottom: 15,
+    },
+
+    modalLabel: {
+        fontSize: 16,
+        color: '#fff',
+        paddingLeft: 10,
+    },
+
+    modalInput: {
+        borderWidth: 0,
+        borderColor: '#303030',
+        borderRadius: 25,
+        backgroundColor: '#fff',
+        padding: 8,
+        paddingLeft: 15,
+        marginTop: 5,
     },
 });
 
