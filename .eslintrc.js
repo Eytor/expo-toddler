@@ -37,6 +37,8 @@ module.exports = {
     "camelcase": [1, { properties: "always" }],
     "space-before-blocks": [2, "always"],
     "block-spacing": [2, "always"],
+    "indent": [1, 4],
+    "react/jsx-indent": [1,4],
     "no-duplicate-imports": 2,
     "no-unused-vars": 2,
     "no-use-before-define": "off",
