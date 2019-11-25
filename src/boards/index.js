@@ -82,7 +82,6 @@ class Boards extends Component {
                                 <Text style={styles.btnCloseModal}>x</Text>
                             </TouchableOpacity>
                             <View style={styles.formGroup}>
-
                                 <Text style={styles.modalLabel}>Name</Text>
                                 <TextInput
                                     style={styles.modalInput}
@@ -92,8 +91,9 @@ class Boards extends Component {
                                 />
                             </View>
                             <View style={styles.formGroup}>
-                                
-                                <Text style={styles.modalLabel}>Description</Text>
+                                <Text style={styles.modalLabel}>
+                                    Description
+                                </Text>
                                 <TextInput
                                     style={styles.modalInput}
                                     label="Description"
@@ -102,8 +102,9 @@ class Boards extends Component {
                                 />
                             </View>
                             <View style={styles.formGroup}>
-                                
-                                <Text style={styles.modalLabel}>Thumbnail Photo</Text>
+                                <Text style={styles.modalLabel}>
+                                    Thumbnail Photo
+                                </Text>
                                 <TextInput
                                     style={styles.modalInput}
                                     label="Thumbnail Photo"
@@ -115,8 +116,7 @@ class Boards extends Component {
                     </View>
                     <Button
                         disabled={
-                            !this.state.name
-                            || !this.state.thumbnailPhoto
+                            !this.state.name || !this.state.thumbnailPhoto
                         }
                         onPress={this.addToData}
                         style={styles.btn}
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     },
 
     btnCloseModal: {
-        textTransform: "uppercase",
+        textTransform: 'uppercase',
         fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'right',
