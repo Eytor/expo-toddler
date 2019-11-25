@@ -44,12 +44,12 @@ class Boards extends Component {
         });
     }
 
-    removeItem = (id) => {
-        const newBoard = [...this.state.boards];
+    removeItem = async (id) => {
+        let newBoard = [...this.state.boards];
         // TODO: remove item by ID
-       let index = newBoard.findIndex((i) => i.id === id)
-       newBoard = [...newBoard.slice(0, index).concat(...newBoard.slice(index+1))];
-       this.setState({Boards: newBoard})
+        const index = newBoard.findIndex((i) => i.id === id);
+        newBoard = await [...newBoard.slice(0, index).concat(...newBoard.slice(index + 1))];
+        this.setState({ boards: newBoard });
     }
 
     setModalVisible(visible) {
@@ -59,10 +59,11 @@ class Boards extends Component {
     render() {
         const { boards } = this.state;
         const boardlist = boards.map((x) => (
-            <View style={styles.boardListItem}>
-                <Text style={styles.boardListItemText} key={x.id}>
-                    {x.name}
-                </Text>
+            <View style={styles.boardListItem} key={x.id}>
+                <Text style={styles.boardListItemText}>{x.name}</Text>
+                <TouchableOpacity onPress={() => this.removeItem(x.id)}>
+                    <Text>delete</Text>
+                </TouchableOpacity>
             </View>
         ));
 
