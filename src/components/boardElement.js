@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
-    Text, View, Image, TouchableOpacity, StyleSheet
+    Text, View, Image, TouchableOpacity, StyleSheet,
 } from 'react-native';
 
 class BoardElement extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     render() {
-        const {id, name, description, thumbnailPhoto} = this.props;
+        const {
+            id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
+        } = this.props;
         return (
-            <View style={styles.boardListItem}>
+            <TouchableOpacity style={styles.boardListItem}
+            onPress={() => navigation.navigate('Board', {id: id})}
+            >
                 <Text style={styles.heading}>{name}</Text>
                 <View style={styles.contentWrapper}>
                     <View style={styles.imageWrapper}>
@@ -27,19 +31,19 @@ class BoardElement extends Component {
                     </View>
                 </View>
                 <TouchableOpacity
-                    onPress={() => this.props.removeItem(id)}
+                    onPress={() => removeItem(id)}
                     style={styles.deleteWrapper}
                 >
                     <View style={styles.arrowTop}></View>
                     <View style={styles.arrowBot}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => this.props.openEdit(id, name, description, thumbnailPhoto)}
+                    onPress={() => openEdit(id, name, description, thumbnailPhoto)}
                     style={styles.edit}
                 >
                     <Text style={styles.editText}>Edit</Text>
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
@@ -115,5 +119,19 @@ const styles = StyleSheet.create({
     }
 
 });
+
+BoardElement.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    thumbnailPhoto: PropTypes.string.isRequired,
+    removeItem: PropTypes.func.isRequired,
+    openEdit: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
+};
+
+BoardElement.defaultProps = {
+    description: '',
+};
 
 export default BoardElement;

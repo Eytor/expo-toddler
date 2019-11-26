@@ -4,12 +4,10 @@ import {
     View,
     Button,
     Modal,
-    Alert,
     TextInput,
     TouchableOpacity,
     StyleSheet,
     ScrollView,
-    Image,
 } from 'react-native';
 import * as data from '../../db/data.json';
 import BoardElement from '../components/boardElement';
@@ -21,6 +19,7 @@ class Boards extends Component {
         this.editItem = this.editItem.bind(this);
         this.openEdit = this.openEdit.bind(this);
         this.removeItem = this.removeItem.bind(this);
+        this.clearForm = this.clearForm.bind(this);
         this.state = {
             boards: data.boards,
             modalVisible: false,
@@ -62,13 +61,9 @@ class Boards extends Component {
         };
         this.setState({
             boards: newBoard,
-            edit: false,
-            name: null,
-            workingId: null,
-            description: null,
-            thumbnailPhoto: null,
             modalVisible: false,
         });
+        this.clearForm();
     }
 
     openEdit(id, name, description, thumbnailPhoto) {
@@ -96,10 +91,22 @@ class Boards extends Component {
         this.setState({ modalVisible: visible });
     }
 
+    clearForm() {
+        this.setState({
+            edit: false,
+            name: null,
+            workingId: null,
+            description: null,
+            thumbnailPhoto: null,
+            modalVisible: false,
+        });
+    }
+
     render() {
         const { boards } = this.state;
         const boardlist = boards.map((element) => (
-            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description} thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit}/>
+            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description}
+            thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit} navigation={this.props.navigation}/>
         ));
 
         return (
@@ -108,9 +115,6 @@ class Boards extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                    }}
                 >
                     <View style={styles.modalWrapper}>
                         {this.state.edit ? (
@@ -120,12 +124,7 @@ class Boards extends Component {
                         )}
                         <View>
                             <TouchableOpacity
-                                onPress={() => this.setState({
-                                    name: null,
-                                    description: null,
-                                    thumbnailPhoto: null,
-                                    modalVisible: false,
-                                })}
+                                onPress={() => this.clearForm()}
                             >
                                 <Text style={styles.btnCloseModal}>x</Text>
                             </TouchableOpacity>
