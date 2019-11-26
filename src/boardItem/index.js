@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity,
+    View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
@@ -10,6 +10,10 @@ class BoardItem extends Component {
     constructor(props) {
         super(props);
         this.addToData = this.addToData.bind(this);
+        this.editItem = this.editItem.bind(this);
+        this.openEdit = this.openEdit.bind(this);
+        // this.removeItem = this.removeItem.bind(this);
+        this.clearForm = this.clearForm.bind(this);
         this.state = {
             lists: [],
             workingId: null,
@@ -52,6 +56,48 @@ class BoardItem extends Component {
         data.lists.push(newList);
     }
 
+    editItem() {
+        const newLists = [...this.state.lists];
+        const index = newLists.findIndex((i) => i.id === this.state.workingId);
+        const newList = {
+            id: this.state.workingId,
+            name: this.state.name,
+            color: this.state.color,
+            boardId: this.state.boardId,
+        };
+        newLists[index] = newList;
+        this.setState({
+            lists: newLists,
+            modalVisible: false,
+        });
+        data.lists[
+            data.lists.findIndex((i) => i.id === this.state.workingId)
+        ] = newList;
+        this.clearForm();
+    }
+
+    openEdit(id, name, color, boardId) {
+        this.setState({
+            modalVisible: true,
+            edit: true,
+            workingId: id,
+            name,
+            color,
+            boardId,
+        });
+    }
+
+    clearForm() {
+        this.setState({
+            workingId: null,
+            modalVisible: false,
+            edit: false,
+            name: null,
+            color: null,
+            boardId: null,
+        });
+    }
+
 
     // componentWillUnmount() {
     //     // Líklegast óþarfi ef við manipulatum um leið og við breytum
@@ -81,65 +127,70 @@ class BoardItem extends Component {
                 id={element.id}
                 name={element.name}
                 color={element.color}
+                boardId={element.boardId}
                 index={index}
                 length={array.length}
+                openEdit={this.openEdit}
                 navigation={this.props.navigation}
             />
         ));
         return (
-            <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                >
-                    <View style={styles.modalWrapper}>
-                        {this.state.edit ? (
-                            <Text style={styles.heading}>Edit item</Text>
-                        ) : (
-                            <Text style={styles.heading}>Add new item</Text>
-                        )}
-                        <View>
-                            <TouchableOpacity
-                                onPress={() => this.clearForm()}
-                            >
-                                <Text style={styles.btnCloseModal}>x</Text>
-                            </TouchableOpacity>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>Name</Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Name"
-                                    onChangeText={(name) => this.setState({ name })}
-                                    value={this.state.name}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Color
-                                </Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Color"
-                                    onChangeText={(color) => this.setState({ color })}
-                                    value={this.state.color}
-                                />
+            <View style={{ flex: 1, width: '100%' }}>
+
+                <View style={styles.container}>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                    >
+                        <View style={styles.modalWrapper}>
+                            {this.state.edit ? (
+                                <Text style={styles.heading}>Edit item</Text>
+                            ) : (
+                                <Text style={styles.heading}>Add new item</Text>
+                            )}
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => this.clearForm()}
+                                >
+                                    <Text style={styles.btnCloseModal}>x</Text>
+                                </TouchableOpacity>
+                                <View style={styles.formGroup}>
+                                    <Text style={styles.modalLabel}>Name</Text>
+                                    <TextInput
+                                        style={styles.modalInput}
+                                        label="Name"
+                                        onChangeText={(name) => this.setState({ name })}
+                                        value={this.state.name}
+                                    />
+                                </View>
+                                <View style={styles.formGroup}>
+                                    <Text style={styles.modalLabel}>
+                                        Color
+                                    </Text>
+                                    <TextInput
+                                        style={styles.modalInput}
+                                        label="Color"
+                                        onChangeText={(color) => this.setState({ color })}
+                                        value={this.state.color}
+                                    />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <Button
-                        disabled={
-                            !this.state.name || !this.state.color
-                        }
-                        onPress={
-                            this.state.edit ? this.editItem : this.addToData
-                        }
-                        style={styles.btn}
-                        title="Save"
-                    />
-                </Modal>
-                <Text style={styles.heading}>Lists</Text>
-                <View style={styles.listItemContainer}>{list}</View>
+                        <Button
+                            disabled={
+                                !this.state.name || !this.state.color
+                            }
+                            onPress={
+                                this.state.edit ? this.editItem : this.addToData
+                            }
+                            style={styles.btn}
+                            title="Save"
+                        />
+                    </Modal>
+                    <Text style={styles.heading}>Lists</Text>
+                    <View style={styles.listItemContainer}>{list}</View>
+                </View>
                 <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
@@ -181,6 +232,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#303030',
         fontWeight: 'bold',
+    },
+    btn: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 50,
+        width: '100%',
+        backgroundColor: '#4CB944',
+    },
+    btnText: {
+        fontSize: 16,
+        fontWeight: 'normal',
+        color: '#fff',
     },
 });
 BoardItem.propTypes = {

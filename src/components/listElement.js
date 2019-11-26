@@ -1,26 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    Text, View, StyleSheet, TouchableOpacity,
+    Text, View, StyleSheet, TouchableOpacity, Image,
 } from 'react-native';
 
 const ListElement = (props) => {
     const {
-        id, name, color, index, length, navigation,
+        id, name, color, index, length, navigation, openEdit, boardId,
     } = props;
     return (
-        <TouchableOpacity
-            style={[
-                styles.listItemWrapper,
-                { borderColor: color },
-                index === length - 1
-                    ? { marginBottom: 0 }
-                    : { marginBottom: 15 },
-            ]}
-            onPress={() => navigation.navigate('Tasks', { id })}
-        >
-            <Text style={styles.listItemHeading}>{name}</Text>
-        </TouchableOpacity>
+        <View>
+            <TouchableOpacity
+                style={[
+                    styles.listItemWrapper,
+                    { borderColor: color },
+                    index === length - 1
+                        ? { marginBottom: 0 }
+                        : { marginBottom: 15 },
+                ]}
+                onPress={() => navigation.navigate('Tasks', { id })}
+            >
+                <Text style={styles.listItemHeading}>{name}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => openEdit(id, name, color, boardId)}
+            >
+                <Image
+                    style={{ width: 20, height: 20 }}
+                    source={require('../../assets/cogwheel.png')}
+                />
+            </TouchableOpacity>
+
+        </View>
+
     );
 };
 
@@ -58,10 +70,16 @@ const styles = StyleSheet.create({
 ListElement.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
+    boardId: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
     length: PropTypes.number.isRequired,
     navigation: PropTypes.object.isRequired,
+    openEdit: PropTypes.func.isRequired,
+};
+
+ListElement.defaultProps = {
+    color: '#fff',
 };
 
 export default ListElement;

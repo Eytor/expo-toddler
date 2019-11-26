@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity, StyleSheet, Image, Modal, TextInput, Button, Switch,
+    View,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+    Modal,
+    TextInput,
+    Button,
+    Switch,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as data from '../../db/data.json';
+import Task from '../components/task';
 
 class Tasks extends Component {
     constructor(props) {
@@ -98,34 +106,12 @@ class Tasks extends Component {
     render() {
         const { tasks, id } = this.state;
         const list = tasks.map((element) => (
-            <View key={element.id}>
-                <Text style={styles.taskHeading}>{element.name}</Text>
-                <View
-                    style={[
-                        styles.contentWrapper,
-                        element.isFinished
-                            ? { borderColor: '#97CC04' }
-                            : { borderColor: '#D62828' },
-                    ]}
-                >
-                    <TouchableOpacity
-                        onPress={() => {}}
-                        style={styles.deleteWrapper}
-                    >
-                        <View style={styles.arrowTop} />
-                        <View style={styles.arrowBot} />
-                    </TouchableOpacity>
-                    <Text style={styles.text}>{element.description}</Text>
-                    <View style={styles.edit}>
-                        <TouchableOpacity onPress={() => this.openEdit()}>
-                            <Image
-                                style={{ width: 20, height: 20 }}
-                                source={require('../../assets/cogwheel.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
+            <Task
+                id={element.id}
+                name={element.name}
+                isFinished={element.isFinished}
+                description={element.description}
+            />
         ));
         return (
             <View style={{ flex: 1, width: '100%' }}>
@@ -216,14 +202,6 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
     },
-    contentWrapper: {
-        padding: 15,
-        paddingRight: 30,
-        backgroundColor: '#fff',
-        marginBottom: 15,
-        borderLeftWidth: 5,
-        minHeight: 75,
-    },
     btn: {
         flex: 1,
         justifyContent: 'center',
@@ -242,47 +220,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         marginBottom: 15,
-    },
-    taskHeading: {
-        fontSize: 18,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    text: {
-        fontSize: 16,
-        color: '#303030',
-    },
-    deleteWrapper: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
-        width: 15,
-        height: 15,
-    },
-    arrowTop: {
-        position: 'absolute',
-        width: 2,
-        height: '100%',
-        top: 0,
-        left: 0,
-        transform: [{ rotate: '45deg' }],
-        backgroundColor: '#303030',
-    },
-    arrowBot: {
-        position: 'absolute',
-        width: 2,
-        height: '100%',
-        bottom: 0,
-        left: 0,
-        transform: [{ rotate: '-45deg' }],
-        backgroundColor: '#303030',
-    },
-
-    edit: {
-        position: 'absolute',
-        right: 5,
-        bottom: 10,
     },
 });
 
