@@ -105,8 +105,16 @@ class Boards extends Component {
     render() {
         const { boards } = this.state;
         const boardlist = boards.map((element) => (
-            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description}
-            thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit} navigation={this.props.navigation}/>
+            <BoardElement
+                key={element.id}
+                id={element.id}
+                name={element.name}
+                description={element.description}
+                thumbnailPhoto={element.thumbnailPhoto}
+                removeItem={this.removeItem}
+                openEdit={this.openEdit}
+                navigation={this.props.navigation}
+            />
         ));
 
         return (
@@ -123,9 +131,7 @@ class Boards extends Component {
                             <Text style={styles.heading}>Add new item</Text>
                         )}
                         <View>
-                            <TouchableOpacity
-                                onPress={() => this.clearForm()}
-                            >
+                            <TouchableOpacity onPress={() => this.clearForm()}>
                                 <Text style={styles.btnCloseModal}>x</Text>
                             </TouchableOpacity>
                             <View style={styles.formGroup}>
