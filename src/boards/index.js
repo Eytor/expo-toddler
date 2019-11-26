@@ -18,6 +18,7 @@ class Boards extends Component {
         super(props);
         this.addToData = this.addToData.bind(this);
         this.editItem = this.editItem.bind(this);
+        this.openEdit = this.openEdit.bind(this);
         this.state = {
             boards: data.boards,
             modalVisible: false,
@@ -68,6 +69,17 @@ class Boards extends Component {
         });
     }
 
+    openEdit(id, name, description, thumbnailPhoto) {
+        this.setState({
+            modalVisible: true,
+            edit: true,
+            workingId: id,
+            name,
+            description,
+            thumbnailPhoto,
+        });
+    }
+
     async removeItem(id) {
         let newBoard = [...this.state.boards];
         // TODO: remove item by ID
@@ -96,16 +108,7 @@ class Boards extends Component {
                     <Text>delete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => {
-                        this.setState({
-                            modalVisible: true,
-                            edit: true,
-                            workingId: element.id,
-                            name: element.name,
-                            description: element.description,
-                            thumbnailPhoto: element.thumbnailPhoto,
-                        });
-                    }}
+                    onPress={() => this.openEdit(element.id, element.name, element.description, element.thumbnailPhoto)}
                 >
                     <Text>Edit</Text>
                 </TouchableOpacity>
