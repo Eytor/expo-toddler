@@ -47,7 +47,7 @@ module.exports = {
     "import/no-unresolved": "off",
     "linebreak-style": "off",
     "react/destructuring-assignment": "off",
-    "react/no-access-state-in-setstate": "off"
-    //"prettier/prettier": ["error"]
+    "react/no-access-state-in-setstate": "off",
+    "react/forbid-prop-types": 0,
   },
 };

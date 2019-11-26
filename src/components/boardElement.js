@@ -7,12 +7,11 @@ import {
 class BoardElement extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     render() {
         const {
-            id, name, description, thumbnailPhoto,
+            id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
         } = this.props;
         return (
             <View style={styles.boardListItem}>
@@ -23,14 +22,19 @@ class BoardElement extends Component {
                 <Text style={styles.boardListItemText}>{name}</Text>
                 <Text>{description}</Text>
                 <TouchableOpacity
-                    onPress={() => this.props.removeItem(id)}
+                    onPress={() => removeItem(id)}
                 >
                     <Text>delete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => this.props.openEdit(id, name, description, thumbnailPhoto)}
+                    onPress={() => openEdit(id, name, description, thumbnailPhoto)}
                 >
                     <Text>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Board', {id: id})}
+                >
+                <Text>open</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -119,6 +123,7 @@ BoardElement.propTypes = {
     thumbnailPhoto: PropTypes.string.isRequired,
     removeItem: PropTypes.func.isRequired,
     openEdit: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 BoardElement.defaultProps = {

@@ -4,12 +4,10 @@ import {
     View,
     Button,
     Modal,
-    Alert,
     TextInput,
     TouchableOpacity,
     StyleSheet,
     ScrollView,
-    Image,
 } from 'react-native';
 import * as data from '../../db/data.json';
 import BoardElement from '../components/boardElement';
@@ -107,7 +105,8 @@ class Boards extends Component {
     render() {
         const { boards } = this.state;
         const boardlist = boards.map((element) => (
-            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description} thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit}/>
+            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description}
+            thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit} navigation={this.props.navigation}/>
         ));
 
         return (
