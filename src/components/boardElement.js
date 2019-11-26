@@ -34,3 +34,4 @@ class BoardElement extends Component {
         );
     }
 }
+export default BoardElement;
