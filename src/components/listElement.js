@@ -6,10 +6,10 @@ import {
 
 const ListElement = (props) => {
     const {
-        id, name, color, index, length,
+        id, name, color, index, length, navigation,
     } = props;
     return (
-        <View
+        <TouchableOpacity
             style={[
                 styles.listItemWrapper,
                 { borderColor: color },
@@ -17,9 +17,10 @@ const ListElement = (props) => {
                     ? { marginBottom: 0 }
                     : { marginBottom: 15 },
             ]}
+            onPress={() => navigation.navigate('Tasks', { id })}
         >
             <Text style={styles.listItemHeading}>{name}</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 
