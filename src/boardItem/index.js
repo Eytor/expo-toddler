@@ -18,9 +18,38 @@ class BoardItem extends Component {
         this.setState({ lists: list });
     }
 
+    componentWillUnmount() {
+        // Líklegast óþarfi ef við manipulatum um leið og við breytum
+        this.state.lists.map((element) => {
+            const index = data.lists.findIndex((list) => list.id === element.id);
+            if (index !== -1) {
+                if (
+                    data.lists.findIndex(
+                        (list) => list.id === element.id
+                            && list.name === element.name
+                            && list.color === element.color
+                            && list.listId === element.listId,
+                    ) !== -1
+                ) {
+                    data.lists[index] = element;
+                }
+            } else {
+                data.lists.push(element);
+            }
+        });
+    }
+
     render() {
         const list = this.state.lists.map((element, index, array) => (
-            <ListElement key={element.id} id={element.id} name={element.name} color={element.color} index={index} length={array.length} navigation={this.props.navigation} />
+            <ListElement
+                key={element.id}
+                id={element.id}
+                name={element.name}
+                color={element.color}
+                index={index}
+                length={array.length}
+                navigation={this.props.navigation}
+            />
         ));
         return (
             <View style={styles.container}>
