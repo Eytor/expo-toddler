@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
+import ListElement from '../components/listElement';
 
 class BoardItem extends Component {
     constructor(props) {
@@ -19,18 +20,7 @@ class BoardItem extends Component {
 
     render() {
         const list = this.state.lists.map((element, index, array) => (
-            <View
-                key={element.id}
-                style={[
-                    styles.listItemWrapper,
-                    { borderColor: element.color },
-                    index === array.length - 1
-                        ? { marginBottom: 0 }
-                        : { marginBottom: 15 },
-                ]}
-            >
-                <Text style={styles.listItemHeading}>{element.name}</Text>
-            </View>
+            <ListElement key={element.id} id={element.id} name={element.name} color={element.color} index={index} length={array.length} navigation={this.props.navigation} />
         ));
         return (
             <View style={styles.container}>
