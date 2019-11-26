@@ -16,11 +16,13 @@ class Tasks extends Component {
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
         const tasks = data.tasks.filter((element) => element.listId === id);
+
+        console.log(id, tasks);
         this.setState({ tasks, id });
     }
 
     componentWillUnmount() {
-        //data.tasks = this.state.tasks;
+        // data.tasks = this.state.tasks;
     }
 
     render() {
