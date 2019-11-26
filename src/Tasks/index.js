@@ -80,8 +80,19 @@ class Tasks extends Component {
         this.clearForm();
     }
 
-    removeTask(id) {
-        return id;
+    async removeTask(id) {
+        let newTasks = [...this.state.tasks];
+        const index = newTasks.findIndex((i) => i.id === id);
+        newTasks = await [
+            ...newTasks.slice(0, index).concat(...newTasks.slice(index + 1)),
+        ];
+        this.setState({
+            tasks: newTasks,
+        });
+        const newIndex = data.tasks.findIndex((i) => i.id === id);
+        data.tasks = [
+            ...data.tasks.slice(0, newIndex).concat(...data.tasks.slice(newIndex + 1)),
+        ];
     }
 
     openEdit(id, name, description, isFinished) {
