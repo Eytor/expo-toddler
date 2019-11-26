@@ -1,19 +1,19 @@
 import React from 'react';
 import {
- View, Text, TouchableOpacity, StyleSheet, Image,
+    View, Text, TouchableOpacity, StyleSheet, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 const Task = (props) => {
     const {
-        id, isFinished, name, description,
+        id, isFinished, name, description, openEdit, removeTask,
     } = props;
     return (
         <View key={id}>
             <Text style={styles.taskHeading}>{name}</Text>
             <View style={[styles.contentWrapper, isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
                 <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() => removeTask(id)}
                     style={styles.deleteWrapper}
                 >
                     <View style={styles.arrowTop} />
@@ -22,7 +22,7 @@ const Task = (props) => {
                 <Text style={styles.text}>{description}</Text>
                 <View style={styles.edit}>
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => openEdit(id, name, description, isFinished)}
                     >
                         <Image
                             style={{ width: 20, height: 20 }}
@@ -92,6 +92,8 @@ Task.propTypes = {
     isFinished: PropTypes.bool.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    openEdit: PropTypes.func.isRequired,
+    removeTask: PropTypes.func.isRequired,
 };
 
 export default Task;

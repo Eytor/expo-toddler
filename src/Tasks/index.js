@@ -20,6 +20,7 @@ class Tasks extends Component {
         this.openEdit = this.openEdit.bind(this);
         this.addToTasks = this.addToTasks.bind(this);
         this.editTask = this.editTask.bind(this);
+        this.removeTask = this.removeTask.bind(this);
         this.state = {
             tasks: [],
             id: null,
@@ -46,6 +47,7 @@ class Tasks extends Component {
             name: this.state.name,
             description: this.state.description,
             isFinished: this.state.isFinished,
+            listId: this.state.id,
         };
         newTasks.push(newTask);
         this.setState({
@@ -66,6 +68,7 @@ class Tasks extends Component {
             name: this.state.name,
             description: this.state.description,
             isFinished: this.state.isFinished,
+            listId: this.state.id,
         };
         newTasks[index] = newTask;
         this.setState({
@@ -75,6 +78,10 @@ class Tasks extends Component {
             data.tasks.findIndex((i) => i.id === this.state.workingId)
         ] = newTask;
         this.clearForm();
+    }
+
+    removeTask(id) {
+        return id;
     }
 
     openEdit(id, name, description, isFinished) {
@@ -107,10 +114,13 @@ class Tasks extends Component {
         const { tasks, id } = this.state;
         const list = tasks.map((element) => (
             <Task
+                key={element.id}
                 id={element.id}
                 name={element.name}
                 isFinished={element.isFinished}
                 description={element.description}
+                openEdit={this.openEdit}
+                removeTask={this.removeTask}
             />
         ));
         return (
@@ -122,9 +132,9 @@ class Tasks extends Component {
                 >
                     <View style={styles.modalWrapper}>
                         {this.state.edit ? (
-                            <Text style={styles.heading}>Edit item</Text>
+                            <Text style={styles.heading}>Edit Task</Text>
                         ) : (
-                            <Text style={styles.heading}>Add new item</Text>
+                            <Text style={styles.heading}>Add new Task</Text>
                         )}
                         <View>
                             <TouchableOpacity onPress={() => this.clearForm()}>
@@ -162,10 +172,10 @@ class Tasks extends Component {
                     </View>
                     <Button
                         disabled={
-                            !this.state.name || !this.state.thumbnailPhoto
+                            !this.state.name || !this.state.description
                         }
                         onPress={
-                            this.state.edit ? this.editItem : this.addToData
+                            this.state.edit ? this.editTask : this.addToTasks
                         }
                         style={styles.btn}
                         title="Save"
