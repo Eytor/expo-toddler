@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import {
+    View, Text, TouchableOpacity, StyleSheet, Image, Modal, TextInput, Button, Switch,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as data from '../../db/data.json';
@@ -7,22 +9,90 @@ import * as data from '../../db/data.json';
 class Tasks extends Component {
     constructor(props) {
         super(props);
+        this.openEdit = this.openEdit.bind(this);
+        this.addToTasks = this.addToTasks.bind(this);
+        this.editTask = this.editTask.bind(this);
         this.state = {
             tasks: [],
             id: null,
+            name: null,
+            description: null,
+            isFinished: false,
+            edit: false,
+            workingId: false,
+            modalVisible: false,
         };
     }
 
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
         const tasks = data.tasks.filter((element) => element.listId === id);
-
-        console.log(id, tasks);
         this.setState({ tasks, id });
     }
 
-    componentWillUnmount() {
-        // data.tasks = this.state.tasks;
+    addToTasks() {
+        const newTasks = [...this.state.tasks];
+        const newId = data.tasks[data.tasks.length - 1].id + 1;
+        const newTask = {
+            id: newId,
+            name: this.state.name,
+            description: this.state.description,
+            isFinished: this.state.isFinished,
+        };
+        newTasks.push(newTask);
+        this.setState({
+            tasks: newTasks,
+            name: null,
+            description: null,
+            isFinished: null,
+            modalVisible: false,
+        });
+        data.tasks.push(newTask);
+    }
+
+    editTask() {
+        const newTasks = [...this.state.tasks];
+        const index = newTasks.findIndex((i) => i.id === this.state.workingId);
+        const newTask = {
+            id: this.state.workingId,
+            name: this.state.name,
+            description: this.state.description,
+            isFinished: this.state.isFinished,
+        };
+        newTasks[index] = newTask;
+        this.setState({
+            tasks: newTasks,
+        });
+        data.tasks[
+            data.tasks.findIndex((i) => i.id === this.state.workingId)
+        ] = newTask;
+        this.clearForm();
+    }
+
+    openEdit(id, name, description, isFinished) {
+        this.setState({
+            modalVisible: true,
+            edit: true,
+            workingId: id,
+            name,
+            description,
+            isFinished,
+        });
+    }
+
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
+    clearForm() {
+        this.setState({
+            modalVisible: false,
+            edit: false,
+            workingId: null,
+            name: null,
+            description: null,
+            isFinished: false,
+        });
     }
 
     render() {
@@ -30,7 +100,14 @@ class Tasks extends Component {
         const list = tasks.map((element) => (
             <View key={element.id}>
                 <Text style={styles.taskHeading}>{element.name}</Text>
-                <View style={[styles.contentWrapper, element.isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
+                <View
+                    style={[
+                        styles.contentWrapper,
+                        element.isFinished
+                            ? { borderColor: '#97CC04' }
+                            : { borderColor: '#D62828' },
+                    ]}
+                >
                     <TouchableOpacity
                         onPress={() => {}}
                         style={styles.deleteWrapper}
@@ -40,9 +117,7 @@ class Tasks extends Component {
                     </TouchableOpacity>
                     <Text style={styles.text}>{element.description}</Text>
                     <View style={styles.edit}>
-                        <TouchableOpacity
-                            onPress={() => {}}
-                        >
+                        <TouchableOpacity onPress={() => this.openEdit()}>
                             <Image
                                 style={{ width: 20, height: 20 }}
                                 source={require('../../assets/cogwheel.png')}
@@ -53,12 +128,67 @@ class Tasks extends Component {
             </View>
         ));
         return (
-            <View style={{flex: 1, width: '100%'}}>
+            <View style={{ flex: 1, width: '100%' }}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                >
+                    <View style={styles.modalWrapper}>
+                        {this.state.edit ? (
+                            <Text style={styles.heading}>Edit item</Text>
+                        ) : (
+                            <Text style={styles.heading}>Add new item</Text>
+                        )}
+                        <View>
+                            <TouchableOpacity onPress={() => this.clearForm()}>
+                                <Text style={styles.btnCloseModal}>x</Text>
+                            </TouchableOpacity>
+                            <View style={styles.formGroup}>
+                                <Text style={styles.modalLabel}>Name</Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    onChangeText={(name) => this.setState({ name })}
+                                    value={this.state.name}
+                                />
+                            </View>
+                            <View style={styles.formGroup}>
+                                <Text style={styles.modalLabel}>
+                                    Description
+                                </Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    onChangeText={(description) => this.setState({ description })}
+                                    value={this.state.description}
+                                />
+                            </View>
+                            <View style={styles.formGroup}>
+                                <Text style={styles.modalLabel}>
+                                    Is Finished
+                                </Text>
+                                <Switch
+                                    style={styles.modalInput}
+                                    onValueChange={(isFinished) => this.setState({ isFinished })}
+                                    value={this.state.isFinished}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                    <Button
+                        disabled={
+                            !this.state.name || !this.state.thumbnailPhoto
+                        }
+                        onPress={
+                            this.state.edit ? this.editItem : this.addToData
+                        }
+                        style={styles.btn}
+                        title="Save"
+                    />
+                </Modal>
+
                 <View style={styles.container}>
                     <Text style={styles.heading}>Your tasks</Text>
-                    <ScrollView>
-                        {list}
-                    </ScrollView>
+                    <ScrollView>{list}</ScrollView>
                 </View>
                 <TouchableOpacity
                     style={styles.btn}
