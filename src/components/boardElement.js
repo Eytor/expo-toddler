@@ -5,17 +5,14 @@ import {
 } from 'react-native';
 
 class BoardElement extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const {
             id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
         } = this.props;
         return (
-            <TouchableOpacity style={styles.boardListItem}
-            onPress={() => navigation.navigate('Board', {id: id})}
+            <TouchableOpacity
+                style={styles.boardListItem}
+                onPress={() => navigation.navigate('Board', { id })}
             >
                 <Text style={styles.heading}>{name}</Text>
                 <View style={styles.contentWrapper}>
@@ -34,8 +31,8 @@ class BoardElement extends Component {
                     onPress={() => removeItem(id)}
                     style={styles.deleteWrapper}
                 >
-                    <View style={styles.arrowTop}></View>
-                    <View style={styles.arrowBot}></View>
+                    <View style={styles.arrowTop} />
+                    <View style={styles.arrowBot} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => openEdit(id, name, description, thumbnailPhoto)}
@@ -66,13 +63,13 @@ const styles = StyleSheet.create({
     },
     contentWrapper: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
-    desc:{
+    desc: {
         flex: 1,
         paddingLeft: 15,
     },
-    imageWrapper:{
+    imageWrapper: {
         flex: 1,
     },
     image: {
@@ -93,7 +90,7 @@ const styles = StyleSheet.create({
         height: 15,
     },
     arrowTop: {
-        position: "absolute",
+        position: 'absolute',
         width: 2,
         height: '100%',
         top: 0,
@@ -102,7 +99,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#303030',
     },
     arrowBot: {
-        position: "absolute",
+        position: 'absolute',
         width: 2,
         height: '100%',
         bottom: 0,
@@ -110,13 +107,13 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '-45deg' }],
         backgroundColor: '#303030',
     },
-    editWrapper:{
+    editWrapper: {
         marginTop: 10,
     },
-    editText:{
+    editText: {
         textAlign: 'right',
 
-    }
+    },
 
 });
 
