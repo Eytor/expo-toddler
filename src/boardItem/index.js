@@ -18,19 +18,24 @@ class BoardItem extends Component {
     }
 
     render() {
-        var list = this.state.lists.map((element, index, array) => {
-            return (
-                    <View key={element.id} style={[styles.listItemWrapper, {borderColor: element.color, }, index === array.length -1 ? {marginBottom: 0 }: {marginBottom: 15}]}>
-                        <Text style={styles.listItemHeading}>{element.name}</Text>
-                    </View>
-            );
-        })
+        const list = this.state.lists.map((element, index, array) => (
+            <View
+                key={element.id}
+                style={[
+                    styles.listItemWrapper,
+                    { borderColor: element.color },
+                    index === array.length - 1
+                        ? { marginBottom: 0 }
+                        : { marginBottom: 15 },
+                ]}
+            >
+                <Text style={styles.listItemHeading}>{element.name}</Text>
+            </View>
+        ));
         return (
             <View style={styles.container}>
                 <Text style={styles.heading}>Tasks</Text>
-                <View style={styles.listItemContainer}>
-                    {list}
-                </View>
+                <View style={styles.listItemContainer}>{list}</View>
             </View>
         );
     }
@@ -51,20 +56,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
     },
-    listItemContainer:{
+    listItemContainer: {
         backgroundColor: '#fff',
         padding: 15,
     },
-    listItemWrapper:{
+    listItemWrapper: {
         padding: 8,
         paddingLeft: 15,
         borderLeftWidth: 3,
     },
-    listItemHeading:{
+    listItemHeading: {
         fontSize: 16,
         color: '#303030',
-        fontWeight: 'bold'
-    }
+        fontWeight: 'bold',
+    },
 });
 BoardItem.propTypes = {
     navigation: PropTypes.object.isRequired,
