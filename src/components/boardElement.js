@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
-    Text, View, Image, TouchableOpacity, StyleSheet
+    Text, View, Image, TouchableOpacity, StyleSheet,
 } from 'react-native';
 
 class BoardElement extends Component {
@@ -10,7 +11,9 @@ class BoardElement extends Component {
     }
 
     render() {
-        const {id, name, description, thumbnailPhoto} = this.props;
+        const {
+            id, name, description, thumbnailPhoto,
+        } = this.props;
         return (
             <View style={styles.boardListItem}>
                 <Image
@@ -108,5 +111,18 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 });
+
+BoardElement.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    thumbnailPhoto: PropTypes.string.isRequired,
+    removeItem: PropTypes.func.isRequired,
+    openEdit: PropTypes.func.isRequired,
+};
+
+BoardElement.defaultProps = {
+    description: '',
+};
 
 export default BoardElement;
