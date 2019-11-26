@@ -24,7 +24,7 @@ class BoardItem extends Component {
         ));
         return (
             <View style={styles.container}>
-                <Text style={styles.heading}>Tasks</Text>
+                <Text style={styles.heading}>Lists</Text>
                 <View style={styles.listItemContainer}>{list}</View>
             </View>
         );

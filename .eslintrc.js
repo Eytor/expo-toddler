@@ -49,6 +49,7 @@ module.exports = {
     "react/destructuring-assignment": "off",
     "react/no-access-state-in-setstate": "off",
     "react/forbid-prop-types": 0,
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "global-require": 0,
   },
 };
