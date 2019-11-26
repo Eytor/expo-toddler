@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Boards from '../boards/index';
 import BoardItem from '../boardItem/index';
+import Tasks from '../Tasks/index';
 
 const AppNavigator = createStackNavigator(
     {
@@ -9,6 +10,9 @@ const AppNavigator = createStackNavigator(
         },
         Board: {
             screen: BoardItem,
+        },
+        Tasks: {
+            screen: Tasks,
         },
     },
     {
