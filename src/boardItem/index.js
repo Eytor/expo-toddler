@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
 
 class BoardItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lists: []
-        }
+            lists: [],
+        };
     }
 
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
-        var list = data.lists.filter((element) => element.boardId === id);
-        this.setState({lists: list});
+        const list = data.lists.filter((element) => element.boardId === id);
+        this.setState({ lists: list });
     }
 
     render() {
@@ -65,5 +66,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+BoardItem.propTypes = {
+    navigation: PropTypes.object.isRequired,
+};
 
 export default BoardItem;
