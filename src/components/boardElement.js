@@ -37,12 +37,16 @@ class BoardElement extends Component {
                     <View style={styles.arrowTop}></View>
                     <View style={styles.arrowBot}></View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => openEdit(id, name, description, thumbnailPhoto)}
-                    style={styles.edit}
-                >
-                    <Text style={styles.editText}>Edit</Text>
-                </TouchableOpacity>
+                <View style={styles.edit}>
+                    <TouchableOpacity
+                        onPress={() => openEdit(id, name, description, thumbnailPhoto)}
+                    >
+                        <Image
+                            style={{width: 20, height: 20}}
+                            source={require('../../assets/cogwheel.png')}
+                        />
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
         );
     }
@@ -110,13 +114,11 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '-45deg' }],
         backgroundColor: '#303030',
     },
-    editWrapper:{
+    edit:{
         marginTop: 10,
+        flexDirection:'row',
+        justifyContent: 'flex-end',
     },
-    editText:{
-        textAlign: 'right',
-
-    }
 
 });
 

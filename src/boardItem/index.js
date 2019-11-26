@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import * as data from '../../db/data.json';
 
 class BoardItem extends Component {
@@ -17,21 +17,53 @@ class BoardItem extends Component {
     }
 
     render() {
-        var list = this.state.lists.map((element) => {
+        var list = this.state.lists.map((element, index, array) => {
             return (
-                <View key={element.id}>
-                <Text>{element.name}</Text>
-                <View style={{backgroundColor: element.color, width: 15, height: 10}}></View>
-                <Text>{element.boardId}</Text>
-                </View>
+                    <View key={element.id} style={[styles.listItemWrapper, {borderColor: element.color, }, index === array.length -1 ? {marginBottom: 0 }: {marginBottom: 15}]}>
+                        <Text style={styles.listItemHeading}>{element.name}</Text>
+                    </View>
             );
         })
         return (
-            <View>
-                {list}
+            <View style={styles.container}>
+                <Text style={styles.heading}>Tasks</Text>
+                <View style={styles.listItemContainer}>
+                    {list}
+                </View>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFA400',
+        width: '100%',
+        padding: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    heading: {
+        fontSize: 24,
+        color: '#fff',
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
+    listItemContainer:{
+        backgroundColor: '#fff',
+        padding: 15,
+    },
+    listItemWrapper:{
+        padding: 8,
+        paddingLeft: 15,
+        borderLeftWidth: 3,
+    },
+    listItemHeading:{
+        fontSize: 16,
+        color: '#303030',
+        fontWeight: 'bold'
+    }
+});
 
 export default BoardItem;
