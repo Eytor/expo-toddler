@@ -6,7 +6,7 @@ import {
 
 const ListElement = (props) => {
     const {
-        id, name, color, index, length, navigation, openEdit, boardId,
+        id, name, color, index, length, navigation, openEdit, boardId, removeItem,
     } = props;
     return (
         <View>
@@ -29,6 +29,13 @@ const ListElement = (props) => {
                     style={{ width: 20, height: 20 }}
                     source={require('../../assets/cogwheel.png')}
                 />
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => removeItem(id)}
+                style={styles.deleteWrapper}
+            >
+                <View style={styles.arrowTop} />
+                <View style={styles.arrowBot} />
             </TouchableOpacity>
 
         </View>
@@ -60,6 +67,31 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         borderLeftWidth: 3,
     },
+    deleteWrapper: {
+        position: 'absolute',
+        right: 5,
+        top: 15,
+        width: 15,
+        height: 15,
+    },
+    arrowTop: {
+        position: 'absolute',
+        width: 2,
+        height: '100%',
+        top: 0,
+        left: 0,
+        transform: [{ rotate: '45deg' }],
+        backgroundColor: '#303030',
+    },
+    arrowBot: {
+        position: 'absolute',
+        width: 2,
+        height: '100%',
+        bottom: 0,
+        left: 0,
+        transform: [{ rotate: '-45deg' }],
+        backgroundColor: '#303030',
+    },
     listItemHeading: {
         fontSize: 16,
         color: '#303030',
@@ -76,6 +108,7 @@ ListElement.propTypes = {
     length: PropTypes.number.isRequired,
     navigation: PropTypes.object.isRequired,
     openEdit: PropTypes.func.isRequired,
+    removeItem: PropTypes.func.isRequired,
 };
 
 ListElement.defaultProps = {

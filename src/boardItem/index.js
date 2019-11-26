@@ -12,7 +12,7 @@ class BoardItem extends Component {
         this.addToData = this.addToData.bind(this);
         this.editItem = this.editItem.bind(this);
         this.openEdit = this.openEdit.bind(this);
-        // this.removeItem = this.removeItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.clearForm = this.clearForm.bind(this);
         this.state = {
             lists: [],
@@ -50,10 +50,27 @@ class BoardItem extends Component {
             lists: newLists,
             name: null,
             color: null,
-            boardId: null,
             modalVisible: false,
         });
         data.lists.push(newList);
+    }
+
+    async removeItem(id) {
+        let newList = [...this.state.lists];
+        // TODO: remove item by ID
+        const index = newList.findIndex((i) => i.id === id);
+        newList = await [
+            ...newList.slice(0, index).concat(...newList.slice(index + 1)),
+        ];
+        this.setState({
+            lists: newList,
+        });
+        const newIndex = data.lists.findIndex((i) => i.id === id);
+        console.log(newIndex);
+        data.lists = [
+            ...data.lists.slice(0, newIndex).concat(...data.lists.slice(newIndex + 1)),
+        ];
+        console.log(data.lists);
     }
 
     editItem() {
@@ -76,14 +93,13 @@ class BoardItem extends Component {
         this.clearForm();
     }
 
-    openEdit(id, name, color, boardId) {
+    openEdit(id, name, color) {
         this.setState({
             modalVisible: true,
             edit: true,
             workingId: id,
             name,
             color,
-            boardId,
         });
     }
 
@@ -94,7 +110,6 @@ class BoardItem extends Component {
             edit: false,
             name: null,
             color: null,
-            boardId: null,
         });
     }
 
@@ -131,6 +146,7 @@ class BoardItem extends Component {
                 index={index}
                 length={array.length}
                 openEdit={this.openEdit}
+                removeItem={this.removeItem}
                 navigation={this.props.navigation}
             />
         ));
