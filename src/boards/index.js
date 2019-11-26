@@ -12,6 +12,7 @@ import {
     Image,
 } from 'react-native';
 import * as data from '../../db/data.json';
+import BoardElement from '../components/boardElement';
 
 class Boards extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class Boards extends Component {
         this.addToData = this.addToData.bind(this);
         this.editItem = this.editItem.bind(this);
         this.openEdit = this.openEdit.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.state = {
             boards: data.boards,
             modalVisible: false,
@@ -97,22 +99,7 @@ class Boards extends Component {
     render() {
         const { boards } = this.state;
         const boardlist = boards.map((element) => (
-            <View style={styles.boardListItem} key={element.id}>
-                <Image
-                    style={{ width: 50, height: 50 }}
-                    source={{ uri: element.thumbnailPhoto }}
-                />
-                <Text style={styles.boardListItemText}>{element.name}</Text>
-                <Text>{element.description}</Text>
-                <TouchableOpacity onPress={() => this.removeItem(element.id)}>
-                    <Text>delete</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => this.openEdit(element.id, element.name, element.description, element.thumbnailPhoto)}
-                >
-                    <Text>Edit</Text>
-                </TouchableOpacity>
-            </View>
+            <BoardElement key={element.id} id={element.id} name={element.name} description={element.description} thumbnailPhoto={element.thumbnailPhoto} removeItem={this.removeItem} openEdit={this.openEdit}/>
         ));
 
         return (

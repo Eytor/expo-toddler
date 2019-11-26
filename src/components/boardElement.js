@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Text, View, Image, TouchableOpacity,
+    Text, View, Image, TouchableOpacity, StyleSheet
 } from 'react-native';
 
 class BoardElement extends Component {
@@ -10,23 +10,22 @@ class BoardElement extends Component {
     }
 
     render() {
+        const {id, name, description, thumbnailPhoto} = this.props;
         return (
-            <View style={styles.boardListItem} key={this.props.id}>
+            <View style={styles.boardListItem}>
                 <Image
                     style={{ width: 50, height: 50 }}
-                    source={{ uri: this.props.thumbnailPhoto }}
+                    source={{ uri: thumbnailPhoto }}
                 />
-                <Text style={styles.boardListItemText}>{this.props.name}</Text>
-                <Text>{this.props.description}</Text>
+                <Text style={styles.boardListItemText}>{name}</Text>
+                <Text>{description}</Text>
                 <TouchableOpacity
-                    onPress={() => this.props.removeItem(this.props.id)}
+                    onPress={() => this.props.removeItem(id)}
                 >
                     <Text>delete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => {
-
-                    }}
+                    onPress={() => this.props.openEdit(id, name, description, thumbnailPhoto)}
                 >
                     <Text>Edit</Text>
                 </TouchableOpacity>
@@ -34,4 +33,80 @@ class BoardElement extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFA400',
+        width: '100%',
+        padding: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    btn: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 50,
+        width: '100%',
+        backgroundColor: '#4CB944',
+    },
+    btnText: {
+        fontSize: 16,
+        fontWeight: 'normal',
+        color: '#fff',
+    },
+    heading: {
+        fontSize: 24,
+        color: '#fff',
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
+    boardListItem: {
+        flex: 1,
+        padding: 15,
+        backgroundColor: '#fff',
+        marginBottom: 30,
+    },
+
+    boardListItemText: {
+        fontSize: 16,
+        color: '#303030',
+    },
+
+    modalWrapper: {
+        flex: 1,
+        padding: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
+        backgroundColor: '#FFA400',
+    },
+
+    btnCloseModal: {
+        textTransform: 'uppercase',
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    formGroup: {
+        marginBottom: 15,
+    },
+
+    modalLabel: {
+        fontSize: 16,
+        color: '#fff',
+        paddingLeft: 10,
+    },
+
+    modalInput: {
+        borderWidth: 0,
+        borderColor: '#303030',
+        borderRadius: 25,
+        backgroundColor: '#fff',
+        padding: 8,
+        paddingLeft: 15,
+        marginTop: 5,
+    },
+});
+
 export default BoardElement;
