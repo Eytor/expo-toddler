@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import * as data from '../../db/data.json';
 
 class BoardItem extends Component {
     constructor(props) {
@@ -6,9 +8,12 @@ class BoardItem extends Component {
     }
 
     render() {
-        return ();
+        return (
+            <View>
+                <Text>item</Text>
+            </View>
+        );
     }
-
 }
 
 export default BoardItem;
