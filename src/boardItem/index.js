@@ -24,7 +24,7 @@ class BoardItem extends Component {
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
         const list = data.lists.filter((element) => element.boardId === id);
-        this.setState({ lists: list });
+        this.setState({ lists: list, boardId: id });
     }
 
     setModalVisible(visible) {
@@ -32,44 +32,47 @@ class BoardItem extends Component {
     }
 
     addToData() {
-        const newList = [...this.state.lists];
+        const newLists = [...this.state.lists];
         const newId = data.lists[data.lists.length - 1].id + 1;
-        newList.push({
+        console.log(this.state);
+        const newList = {
             id: newId,
             name: this.state.name,
             color: this.state.color,
             boardId: this.state.boardId,
-        });
+        };
+        newLists.push(newList);
         this.setState({
-            lists: newList,
+            lists: newLists,
             name: null,
             color: null,
             boardId: null,
             modalVisible: false,
         });
+        data.lists.push(newList);
     }
 
 
-    componentWillUnmount() {
-        // Líklegast óþarfi ef við manipulatum um leið og við breytum
-        this.state.lists.map((element) => {
-            const index = data.lists.findIndex((list) => list.id === element.id);
-            if (index !== -1) {
-                if (
-                    data.lists.findIndex(
-                        (list) => list.id === element.id
-                            && list.name === element.name
-                            && list.color === element.color
-                            && list.listId === element.listId,
-                    ) !== -1
-                ) {
-                    data.lists[index] = element;
-                }
-            } else {
-                data.lists.push(element);
-            }
-        });
-    }
+    // componentWillUnmount() {
+    //     // Líklegast óþarfi ef við manipulatum um leið og við breytum
+    //     this.state.lists.map((element) => {
+    //         const index = data.lists.findIndex((list) => list.id === element.id);
+    //         if (index !== -1) {
+    //             if (
+    //                 data.lists.findIndex(
+    //                     (list) => list.id === element.id
+    //                         && list.name === element.name
+    //                         && list.color === element.color
+    //                         && list.listId === element.listId,
+    //                 ) !== -1
+    //             ) {
+    //                 data.lists[index] = element;
+    //             }
+    //         } else {
+    //             data.lists.push(element);
+    //         }
+    //     });
+    // }
 
     render() {
         const list = this.state.lists.map((element, index, array) => (
