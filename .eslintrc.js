@@ -45,7 +45,9 @@ module.exports = {
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
     "import/no-unresolved": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/destructuring-assignment": "off",
+    "react/no-access-state-in-setstate": "off"
     //"prettier/prettier": ["error"]
   },
 };

@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     ScrollView,
+    Image,
 } from 'react-native';
 import * as data from '../../db/data.json';
 
@@ -16,9 +17,12 @@ class Boards extends Component {
     constructor(props) {
         super(props);
         this.addToData = this.addToData.bind(this);
+        this.editItem = this.editItem.bind(this);
         this.state = {
             boards: data.boards,
             modalVisible: false,
+            edit: false,
+            workingId: null,
             name: null,
             description: null,
             thumbnailPhoto: null,
@@ -28,7 +32,7 @@ class Boards extends Component {
     // eslint-disable-next-line react/sort-comp
     addToData() {
         const newBoard = [...this.state.boards];
-        const newId = newBoard[newBoard.length - 1] + 1;
+        const newId = newBoard[newBoard.length - 1].id + 1;
         newBoard.push({
             id: newId,
             name: this.state.name,
@@ -44,11 +48,33 @@ class Boards extends Component {
         });
     }
 
-    removeItem = async (id) => {
+    editItem() {
+        const newBoard = [...this.state.boards];
+        const index = newBoard.findIndex((i) => i.id === this.state.workingId);
+        newBoard[index] = {
+            id: this.state.workingId,
+            name: this.state.name,
+            description: this.state.description,
+            thumbnailPhoto: this.state.thumbnailPhoto,
+        };
+        this.setState({
+            boards: newBoard,
+            edit: false,
+            name: null,
+            workingId: null,
+            description: null,
+            thumbnailPhoto: null,
+            modalVisible: false,
+        });
+    }
+
+    async removeItem(id) {
         let newBoard = [...this.state.boards];
         // TODO: remove item by ID
         const index = newBoard.findIndex((i) => i.id === id);
-        newBoard = await [...newBoard.slice(0, index).concat(...newBoard.slice(index + 1))];
+        newBoard = await [
+            ...newBoard.slice(0, index).concat(...newBoard.slice(index + 1)),
+        ];
         this.setState({ boards: newBoard });
     }
 
@@ -58,11 +84,30 @@ class Boards extends Component {
 
     render() {
         const { boards } = this.state;
-        const boardlist = boards.map((x) => (
-            <View style={styles.boardListItem} key={x.id}>
-                <Text style={styles.boardListItemText}>{x.name}</Text>
-                <TouchableOpacity onPress={() => this.removeItem(x.id)}>
+        const boardlist = boards.map((element) => (
+            <View style={styles.boardListItem} key={element.id}>
+                <Image
+                    style={{ width: 50, height: 50 }}
+                    source={{ uri: element.thumbnailPhoto }}
+                />
+                <Text style={styles.boardListItemText}>{element.name}</Text>
+                <Text>{element.description}</Text>
+                <TouchableOpacity onPress={() => this.removeItem(element.id)}>
                     <Text>delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.setState({
+                            modalVisible: true,
+                            edit: true,
+                            workingId: element.id,
+                            name: element.name,
+                            description: element.description,
+                            thumbnailPhoto: element.thumbnailPhoto,
+                        });
+                    }}
+                >
+                    <Text>Edit</Text>
                 </TouchableOpacity>
             </View>
         ));
@@ -78,7 +123,11 @@ class Boards extends Component {
                     }}
                 >
                     <View style={styles.modalWrapper}>
-                        <Text style={styles.heading}>Add new item</Text>
+                        {this.state.edit ? (
+                            <Text style={styles.heading}>Edit item</Text>
+                        ) : (
+                            <Text style={styles.heading}>Add new item</Text>
+                        )}
                         <View>
                             <TouchableOpacity
                                 onPress={() => this.setState({
@@ -127,9 +176,11 @@ class Boards extends Component {
                         disabled={
                             !this.state.name || !this.state.thumbnailPhoto
                         }
-                        onPress={this.addToData}
+                        onPress={
+                            this.state.edit ? this.editItem : this.addToData
+                        }
                         style={styles.btn}
-                        title="Add item"
+                        title="Save"
                     />
                 </Modal>
                 <View style={styles.container}>
