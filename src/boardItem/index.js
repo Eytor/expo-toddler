@@ -59,16 +59,20 @@ class BoardItem extends Component {
     editItem() {
         const newLists = [...this.state.lists];
         const index = newLists.findIndex((i) => i.id === this.state.workingId);
-        newLists[index] = {
+        const newList = {
             id: this.state.workingId,
             name: this.state.name,
             color: this.state.color,
             boardId: this.state.boardId,
         };
+        newLists[index] = newList;
         this.setState({
             lists: newLists,
             modalVisible: false,
         });
+        data.lists[
+            data.lists.findIndex((i) => i.id === this.state.workingId)
+        ] = newList;
         this.clearForm();
     }
 
