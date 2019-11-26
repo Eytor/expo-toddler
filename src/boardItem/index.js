@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity,
+    View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
@@ -10,6 +10,10 @@ class BoardItem extends Component {
     constructor(props) {
         super(props);
         this.addToData = this.addToData.bind(this);
+        this.editItem = this.editItem.bind(this);
+        this.openEdit = this.openEdit.bind(this);
+        // this.removeItem = this.removeItem.bind(this);
+        this.clearForm = this.clearForm.bind(this);
         this.state = {
             lists: [],
             workingId: null,
@@ -52,6 +56,44 @@ class BoardItem extends Component {
         data.lists.push(newList);
     }
 
+    editItem() {
+        const newLists = [...this.state.lists];
+        const index = newLists.findIndex((i) => i.id === this.state.workingId);
+        newLists[index] = {
+            id: this.state.workingId,
+            name: this.state.name,
+            color: this.state.color,
+            boardId: this.state.boardId,
+        };
+        this.setState({
+            lists: newLists,
+            modalVisible: false,
+        });
+        this.clearForm();
+    }
+
+    openEdit(id, name, color, boardId) {
+        this.setState({
+            modalVisible: true,
+            edit: true,
+            workingId: id,
+            name,
+            color,
+            boardId,
+        });
+    }
+
+    clearForm() {
+        this.setState({
+            workingId: null,
+            modalVisible: false,
+            edit: false,
+            name: null,
+            color: null,
+            boardId: null,
+        });
+    }
+
 
     // componentWillUnmount() {
     //     // Líklegast óþarfi ef við manipulatum um leið og við breytum
@@ -81,8 +123,10 @@ class BoardItem extends Component {
                 id={element.id}
                 name={element.name}
                 color={element.color}
+                boardId={element.boardId}
                 index={index}
                 length={array.length}
+                openEdit={this.openEdit}
                 navigation={this.props.navigation}
             />
         ));
