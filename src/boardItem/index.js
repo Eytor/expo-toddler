@@ -87,59 +87,62 @@ class BoardItem extends Component {
             />
         ));
         return (
-            <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                >
-                    <View style={styles.modalWrapper}>
-                        {this.state.edit ? (
-                            <Text style={styles.heading}>Edit item</Text>
-                        ) : (
-                            <Text style={styles.heading}>Add new item</Text>
-                        )}
-                        <View>
-                            <TouchableOpacity
-                                onPress={() => this.clearForm()}
-                            >
-                                <Text style={styles.btnCloseModal}>x</Text>
-                            </TouchableOpacity>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>Name</Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Name"
-                                    onChangeText={(name) => this.setState({ name })}
-                                    value={this.state.name}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Color
-                                </Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Color"
-                                    onChangeText={(color) => this.setState({ color })}
-                                    value={this.state.color}
-                                />
+            <View style={{ flex: 1, width: '100%' }}>
+
+                <View style={styles.container}>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                    >
+                        <View style={styles.modalWrapper}>
+                            {this.state.edit ? (
+                                <Text style={styles.heading}>Edit item</Text>
+                            ) : (
+                                <Text style={styles.heading}>Add new item</Text>
+                            )}
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => this.clearForm()}
+                                >
+                                    <Text style={styles.btnCloseModal}>x</Text>
+                                </TouchableOpacity>
+                                <View style={styles.formGroup}>
+                                    <Text style={styles.modalLabel}>Name</Text>
+                                    <TextInput
+                                        style={styles.modalInput}
+                                        label="Name"
+                                        onChangeText={(name) => this.setState({ name })}
+                                        value={this.state.name}
+                                    />
+                                </View>
+                                <View style={styles.formGroup}>
+                                    <Text style={styles.modalLabel}>
+                                        Color
+                                    </Text>
+                                    <TextInput
+                                        style={styles.modalInput}
+                                        label="Color"
+                                        onChangeText={(color) => this.setState({ color })}
+                                        value={this.state.color}
+                                    />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <Button
-                        disabled={
-                            !this.state.name || !this.state.color
-                        }
-                        onPress={
-                            this.state.edit ? this.editItem : this.addToData
-                        }
-                        style={styles.btn}
-                        title="Save"
-                    />
-                </Modal>
-                <Text style={styles.heading}>Lists</Text>
-                <View style={styles.listItemContainer}>{list}</View>
+                        <Button
+                            disabled={
+                                !this.state.name || !this.state.color
+                            }
+                            onPress={
+                                this.state.edit ? this.editItem : this.addToData
+                            }
+                            style={styles.btn}
+                            title="Save"
+                        />
+                    </Modal>
+                    <Text style={styles.heading}>Lists</Text>
+                    <View style={styles.listItemContainer}>{list}</View>
+                </View>
                 <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
@@ -181,6 +184,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#303030',
         fontWeight: 'bold',
+    },
+    btn: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 50,
+        width: '100%',
+        backgroundColor: '#4CB944',
+    },
+    btnText: {
+        fontSize: 16,
+        fontWeight: 'normal',
+        color: '#fff',
     },
 });
 BoardItem.propTypes = {
