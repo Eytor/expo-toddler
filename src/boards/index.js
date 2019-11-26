@@ -173,7 +173,7 @@ class Boards extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <Text style={styles.heading}>List of boards:</Text>
+                    <Text style={styles.heading}>Your boards</Text>
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity
@@ -216,17 +216,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         marginBottom: 15,
-    },
-    boardListItem: {
-        flex: 1,
-        padding: 15,
-        backgroundColor: '#fff',
-        marginBottom: 30,
-    },
-
-    boardListItemText: {
-        fontSize: 16,
-        color: '#303030',
     },
 
     modalWrapper: {
