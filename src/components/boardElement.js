@@ -1,53 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Text, View, Image, TouchableOpacity, StyleSheet,
 } from 'react-native';
 
-class BoardElement extends Component {
-    render() {
-        const {
-            id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
-        } = this.props;
-        return (
+const BoardElement = (props) => {
+    const {
+        id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
+    } = props;
+    return (
+        <TouchableOpacity
+            style={styles.boardListItem}
+            onPress={() => navigation.navigate('Board', { id })}
+        >
+            <Text style={styles.heading}>{name}</Text>
+            <View style={styles.contentWrapper}>
+                <View style={styles.imageWrapper}>
+                    <Image
+                        style={styles.image}
+                        source={{ uri: thumbnailPhoto }}
+                        resizeMode="contain"
+                    />
+                </View>
+                <View style={styles.desc}>
+                    <Text>{description}</Text>
+                </View>
+            </View>
             <TouchableOpacity
-                style={styles.boardListItem}
-                onPress={() => navigation.navigate('Board', { id })}
+                onPress={() => removeItem(id)}
+                style={styles.deleteWrapper}
             >
-                <Text style={styles.heading}>{name}</Text>
-                <View style={styles.contentWrapper}>
-                    <View style={styles.imageWrapper}>
-                        <Image
-                            style={styles.image}
-                            source={{ uri: thumbnailPhoto }}
-                            resizeMode="contain"
-                        />
-                    </View>
-                    <View style={styles.desc}>
-                        <Text>{description}</Text>
-                    </View>
-                </View>
-                <TouchableOpacity
-                    onPress={() => removeItem(id)}
-                    style={styles.deleteWrapper}
-                >
-                    <View style={styles.arrowTop} />
-                    <View style={styles.arrowBot} />
-                </TouchableOpacity>
-                <View style={styles.edit}>
-                    <TouchableOpacity
-                        onPress={() => openEdit(id, name, description, thumbnailPhoto)}
-                    >
-                        <Image
-                            style={{width: 20, height: 20}}
-                            source={require('../../assets/cogwheel.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
+                <View style={styles.arrowTop} />
+                <View style={styles.arrowBot} />
             </TouchableOpacity>
-        );
-    }
-}
+            <View style={styles.edit}>
+                <TouchableOpacity
+                    onPress={() => openEdit(id, name, description, thumbnailPhoto)}
+                >
+                    <Image
+                        style={{ width: 20, height: 20 }}
+                        source={require('../../assets/cogwheel.png')}
+                    />
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
 
 const styles = StyleSheet.create({
     heading: {
@@ -111,9 +110,9 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '-45deg' }],
         backgroundColor: '#303030',
     },
-    edit:{
+    edit: {
         marginTop: 10,
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'flex-end',
     },
 
