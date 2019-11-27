@@ -7,8 +7,10 @@ import {
     Button,
     TouchableOpacity,
     Switch,
+    Picker,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import * as data from '../../../db/data.json';
 
 class TaskForm extends Component {
     constructor(props) {
@@ -17,6 +19,8 @@ class TaskForm extends Component {
             name: null,
             description: null,
             isFinished: null,
+            lists: null,
+            selectedListId: null,
         };
     }
 
@@ -25,6 +29,8 @@ class TaskForm extends Component {
             name: this.props.name,
             description: this.props.description,
             isFinished: this.props.isFinished,
+            lists: data.lists.filter((element) => element.boardId === this.props.boardId),
+            selectedListId: this.props.listId,
         });
     }
 
@@ -32,6 +38,9 @@ class TaskForm extends Component {
         const {
             edit, addToData, editTask, clearForm,
         } = this.props;
+        const pickerItems = this.state.lists.map((element) => (
+            <Picker.Item key={element.id} label={element.name} value={element.id} />
+        ));
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
@@ -42,6 +51,22 @@ class TaskForm extends Component {
                         <Text style={styles.heading}>Edit Task</Text>
                     ) : (
                         <Text style={styles.heading}>Add New Task</Text>
+                    )}
+                    { edit && (
+                        <View style={styles.formGroup}>
+                            <Text style={styles.label}>Related lists</Text>
+                            <View style={styles.pickerWrapper}>
+                                <Picker
+                                    selectedValue={this.state.selectedListId}
+                                    onValueChange={(itemValue) => {
+                                        this.setState({ selectedListId: itemValue });
+                                    }}
+                                    style={styles.picker}
+                                >
+                                    {pickerItems}
+                                </Picker>
+                            </View>
+                        </View>
                     )}
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Name</Text>
@@ -93,6 +118,7 @@ class TaskForm extends Component {
                                 this.state.name,
                                 this.state.description,
                                 this.state.isFinished,
+                                this.state.selectedListId,
                             )
                             : addToData(
                                 this.state.name,
@@ -133,6 +159,14 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         marginTop: 5,
     },
+    pickerWrapper: {
+        borderRadius: 25,
+        overflow: 'hidden',
+    },
+    picker: {
+        backgroundColor: '#fff',
+        borderRadius: 25,
+    },
     wrapper: {
         flex: 1,
         padding: 30,
@@ -168,6 +202,8 @@ TaskForm.propTypes = {
     editTask: PropTypes.func.isRequired,
     clearForm: PropTypes.func.isRequired,
     isFinished: PropTypes.bool,
+    listId: PropTypes.number.isRequired,
+    boardId: PropTypes.number.isRequired,
 };
 
 TaskForm.defaultProps = {
