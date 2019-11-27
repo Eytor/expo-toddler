@@ -25,6 +25,12 @@ class ListForm extends Component {
         });
     }
 
+    checkColor(color) {
+        if (!color) return true;
+        const regex = /^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}))$/;
+        return regex.test(color);
+    }
+
     render() {
         const {
             edit,
@@ -33,7 +39,7 @@ class ListForm extends Component {
             clearForm,
         } = this.props;
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <View style={styles.modalWrapper}>
                     {edit ? (
                         <Text style={styles.heading}>Edit item</Text>
@@ -47,20 +53,22 @@ class ListForm extends Component {
                         <View style={styles.formGroup}>
                             <Text style={styles.modalLabel}>Name</Text>
                             <TextInput
-                                style={styles.modalInput}
+                                style={[styles.modalInput, !this.state.name && styles.errorInput]}
                                 label="Name"
                                 onChangeText={(name) => this.setState({ name })}
                                 value={this.state.name}
                             />
+                            { !this.state.name && <Text style={{ color: '#D62828' }}> Name is required </Text>}
                         </View>
                         <View style={styles.formGroup}>
                             <Text style={styles.modalLabel}>Color</Text>
                             <TextInput
-                                style={styles.modalInput}
+                                style={[styles.modalInput, !this.checkColor(this.state.color) && styles.errorInput]}
                                 label="Color"
                                 onChangeText={(color) => this.setState({ color })}
                                 value={this.state.color}
                             />
+                            { !this.checkColor(this.state.color) && <Text style={{ color: '#D62828' }}> color should be on the form (#111 or #11111) </Text>}
                         </View>
                     </View>
                 </View>
@@ -76,18 +84,42 @@ class ListForm extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    btn: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 50,
+        width: '100%',
+        backgroundColor: '#4CB944',
+    },
+    heading: {
+        fontSize: 24,
+        color: '#fff',
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
+    modalWrapper: {
+        flex: 1,
+        padding: 30,
+        paddingLeft: 15,
+        paddingRight: 15,
+        backgroundColor: '#FFA400',
+    },
+    btnCloseModal: {
+        textTransform: 'uppercase',
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'right',
     },
     formGroup: {
         marginBottom: 15,
     },
-    label: {
+    modalLabel: {
         fontSize: 16,
         color: '#fff',
         paddingLeft: 10,
     },
-    input: {
+    modalInput: {
         borderWidth: 0,
         borderColor: '#303030',
         borderRadius: 25,
@@ -96,12 +128,9 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         marginTop: 5,
     },
-    wrapper: {
-        flex: 1,
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: '#FFA400',
+    errorInput: {
+        borderWidth: 2,
+        borderColor: '#D62828',
     },
 });
 
