@@ -27,9 +27,9 @@ class BoardForm extends Component {
             edit, addToData, editItem, clearForm,
         } = this.props;
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity onPress={() => clearForm}>
+                    <TouchableOpacity onPress={() => clearForm()}>
                         <Text style={styles.btnCloseModal}>x</Text>
                     </TouchableOpacity>
                     {edit ? (
@@ -69,9 +69,7 @@ class BoardForm extends Component {
                     disabled={
                         !this.state.name || !this.state.image
                     }
-                    onPress={
-                        edit ? editItem(this.state.name, this.state.description, this.state.image) : addToData(this.state.name, this.state.description, this.state.image)
-                    }
+                    onPress={() => { edit ? editItem(this.state.name, this.state.description, this.state.image) : addToData(this.state.name, this.state.description, this.state.image); }}
                     style={styles.btn}
                     title="Save"
                 />
