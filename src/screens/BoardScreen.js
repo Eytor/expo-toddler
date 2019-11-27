@@ -136,7 +136,6 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <Text style={styles.heading}>Your boards</Text>
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity

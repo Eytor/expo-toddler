@@ -7,12 +7,68 @@ const AppNavigator = createStackNavigator(
     {
         Home: {
             screen: BoardScreen,
+            navigationOptions: () => ({
+                headerTitle: 'Your boards',
+                headerTitleStyle: {
+                    color: '#fff',
+                    fontWeight: 'bold',
+                },
+                headerStyle: {
+                    backgroundColor: '#FFA400',
+                    shadowColor: 'transparent',
+                    shadowRadius: 0,
+                    shadowOffset: {
+                        height: 0,
+                    },
+                    elevation: 0,
+                },
+            }),
         },
         Board: {
             screen: ListScreen,
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: params.title,
+                    headerTitleStyle: {
+                        color: '#fff',
+                        fontWeight: 'bold',
+                    },
+                    headerStyle: {
+                        backgroundColor: '#FFA400',
+                        shadowColor: 'transparent',
+                        shadowRadius: 0,
+                        shadowOffset: {
+                            height: 0,
+                        },
+                        elevation: 0,
+                    },
+                    headerTintColor: '#FFF',
+                };
+            },
         },
         Tasks: {
             screen: TaskScreen,
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: params.title,
+                    headerTitleStyle: {
+                        color: '#fff',
+                        fontWeight: 'bold',
+                    },
+                    headerStyle: {
+                        backgroundColor: '#FFA400',
+                        shadowColor: 'transparent',
+                        shadowRadius: 0,
+                        shadowOffset: {
+                            height: 0,
+                        },
+                        elevation: 0,
+                    },
+                    headerTintColor: '#FFF',
+                };
+            },
         },
     },
     {
