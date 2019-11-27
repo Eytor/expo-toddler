@@ -236,10 +236,10 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     listItemContainer: {
-        backgroundColor: '#fff',
         padding: 15,
     },
     listItemWrapper: {
+        backgroundColor: '#fff',
         padding: 8,
         paddingLeft: 15,
         borderLeftWidth: 3,
