@@ -129,8 +129,8 @@ class BoardScreen extends Component {
                         {this.state.edit ? (
                             <Text style={styles.heading}>Edit item</Text>
                         ) : (
-                                <Text style={styles.heading}>Add new item</Text>
-                            )}
+                            <Text style={styles.heading}>Add new item</Text>
+                        )}
                         <View>
                             <TouchableOpacity onPress={() => this.clearForm()}>
                                 <Text style={styles.btnCloseModal}>x</Text>
@@ -180,7 +180,6 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <Text style={styles.heading}>Your boards</Text>
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity

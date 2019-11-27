@@ -18,7 +18,7 @@ const ListElement = (props) => {
                         ? { marginBottom: 0 }
                         : { marginBottom: 15 },
                 ]}
-                onPress={() => navigation.navigate('Tasks', { id })}
+                onPress={() => navigation.navigate('Tasks', { id, title: name })}
             >
                 <Text style={styles.listItemHeading}>{name}</Text>
             </TouchableOpacity>

@@ -11,7 +11,7 @@ const BoardElement = (props) => {
     return (
         <TouchableOpacity
             style={styles.boardListItem}
-            onPress={() => navigation.navigate('Board', { id })}
+            onPress={() => navigation.navigate('Board', { id, title: name })}
         >
             <Text style={styles.heading}>{name}</Text>
             <View style={styles.contentWrapper}>
