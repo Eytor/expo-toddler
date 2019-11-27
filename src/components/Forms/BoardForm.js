@@ -41,9 +41,9 @@ class BoardForm extends Component {
                         <Text style={styles.btnCloseModal}>x</Text>
                     </TouchableOpacity>
                     {edit ? (
-                        <Text style={styles.heading}>Edit item</Text>
+                        <Text style={styles.heading}>Edit Board</Text>
                     ) : (
-                        <Text style={styles.heading}>Add new item</Text>
+                        <Text style={styles.heading}>Add New Board</Text>
                     )}
                     <View style={styles.formGroup}>
                         <Text style={styles.modalLabel}>Name</Text>

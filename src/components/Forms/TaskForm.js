@@ -41,7 +41,7 @@ class TaskForm extends Component {
                     {edit ? (
                         <Text style={styles.heading}>Edit Task</Text>
                     ) : (
-                        <Text style={styles.heading}>Add new item</Text>
+                        <Text style={styles.heading}>Add New Task</Text>
                     )}
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Name</Text>

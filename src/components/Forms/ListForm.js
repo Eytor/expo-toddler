@@ -42,15 +42,15 @@ class ListForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.modalWrapper}>
+                    <TouchableOpacity onPress={() => clearForm()}>
+                        <Text style={styles.btnCloseModal}>x</Text>
+                    </TouchableOpacity>
                     {edit ? (
-                        <Text style={styles.heading}>Edit item</Text>
+                        <Text style={styles.heading}>Edit List</Text>
                     ) : (
-                        <Text style={styles.heading}>Add new item</Text>
+                        <Text style={styles.heading}>Add New List</Text>
                     )}
                     <View>
-                        <TouchableOpacity onPress={() => clearForm()}>
-                            <Text style={styles.btnCloseModal}>x</Text>
-                        </TouchableOpacity>
                         <View style={styles.formGroup}>
                             <Text style={styles.modalLabel}>Name</Text>
                             <TextInput

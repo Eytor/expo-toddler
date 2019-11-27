@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Modal,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
@@ -150,7 +151,7 @@ class ListScreen extends Component {
                         />
                     </Modal>
                     <Text style={styles.heading}>Lists</Text>
-                    <View style={styles.listItemContainer}>{list}</View>
+                    <ScrollView style={styles.listItemContainer}>{list}</ScrollView>
                 </View>
                 <TouchableOpacity
                     style={styles.btn}
