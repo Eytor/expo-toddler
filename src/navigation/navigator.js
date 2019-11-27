@@ -1,18 +1,18 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import Boards from '../boards/index';
-import BoardItem from '../boardItem/index';
-import Tasks from '../Tasks/index';
+import BoardScreen from '../screens/BoardScreen';
+import ListScreen from '../screens/ListScreen';
+import TaskScreen from '../screens/TaskScreen';
 
 const AppNavigator = createStackNavigator(
     {
         Home: {
-            screen: Boards,
+            screen: BoardScreen,
         },
         Board: {
-            screen: BoardItem,
+            screen: ListScreen,
         },
         Tasks: {
-            screen: Tasks,
+            screen: TaskScreen,
         },
     },
     {

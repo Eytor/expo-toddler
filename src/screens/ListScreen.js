@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
 import ListElement from '../components/listElement';
 
-class BoardItem extends Component {
+class ListScreen extends Component {
     constructor(props) {
         super(props);
         this.addToData = this.addToData.bind(this);
@@ -263,8 +263,8 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
 });
-BoardItem.propTypes = {
+ListScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-export default BoardItem;
+export default ListScreen;

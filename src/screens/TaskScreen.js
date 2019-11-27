@@ -1,90 +1,109 @@
 import React, { Component } from 'react';
 import {
-    Text,
     View,
-    Button,
-    Modal,
-    TextInput,
+    Text,
     TouchableOpacity,
     StyleSheet,
-    ScrollView,
+    Modal,
+    TextInput,
+    Button,
+    Switch,
 } from 'react-native';
+import PropTypes from 'prop-types';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as data from '../../db/data.json';
-import BoardElement from '../components/boardElement';
+import Task from '../components/task';
 
-class Boards extends Component {
+class TaskScreen extends Component {
     constructor(props) {
         super(props);
-        this.addToData = this.addToData.bind(this);
-        this.editItem = this.editItem.bind(this);
         this.openEdit = this.openEdit.bind(this);
-        this.removeItem = this.removeItem.bind(this);
-        this.clearForm = this.clearForm.bind(this);
+        this.addToTasks = this.addToTasks.bind(this);
+        this.editTask = this.editTask.bind(this);
+        this.removeTask = this.removeTask.bind(this);
         this.state = {
-            boards: data.boards,
-            modalVisible: false,
-            edit: false,
-            workingId: null,
+            tasks: [],
+            id: null,
             name: null,
             description: null,
-            thumbnailPhoto: null,
+            isFinished: false,
+            edit: false,
+            workingId: false,
+            modalVisible: false,
         };
     }
 
-    // eslint-disable-next-line react/sort-comp
-    addToData() {
-        const newBoard = [...this.state.boards];
-        const newId = newBoard[newBoard.length - 1].id + 1;
-        newBoard.push({
+    componentWillMount() {
+        const { id } = this.props.navigation.state.params;
+        const tasks = data.tasks.filter((element) => element.listId === id);
+        this.setState({ tasks, id });
+    }
+
+    addToTasks() {
+        const newTasks = [...this.state.tasks];
+        const newId = data.tasks[data.tasks.length - 1].id + 1;
+        const newTask = {
             id: newId,
             name: this.state.name,
             description: this.state.description,
-            thumbnailPhoto: this.state.thumbnailPhoto,
-        });
+            isFinished: this.state.isFinished,
+            listId: this.state.id,
+        };
+        newTasks.push(newTask);
         this.setState({
-            boards: newBoard,
+            tasks: newTasks,
             name: null,
             description: null,
-            thumbnailPhoto: null,
+            isFinished: null,
             modalVisible: false,
         });
+        data.tasks.push(newTask);
     }
 
-    editItem() {
-        const newBoard = [...this.state.boards];
-        const index = newBoard.findIndex((i) => i.id === this.state.workingId);
-        newBoard[index] = {
+    editTask() {
+        const newTasks = [...this.state.tasks];
+        const index = newTasks.findIndex((i) => i.id === this.state.workingId);
+        const newTask = {
             id: this.state.workingId,
             name: this.state.name,
             description: this.state.description,
-            thumbnailPhoto: this.state.thumbnailPhoto,
+            isFinished: this.state.isFinished,
+            listId: this.state.id,
         };
+        newTasks[index] = newTask;
         this.setState({
-            boards: newBoard,
-            modalVisible: false,
+            tasks: newTasks,
         });
+        data.tasks[
+            data.tasks.findIndex((i) => i.id === this.state.workingId)
+        ] = newTask;
         this.clearForm();
     }
 
-    openEdit(id, name, description, thumbnailPhoto) {
+    async removeTask(id) {
+        let newTasks = [...this.state.tasks];
+        const index = newTasks.findIndex((i) => i.id === id);
+        newTasks = await [
+            ...newTasks.slice(0, index).concat(...newTasks.slice(index + 1)),
+        ];
+        this.setState({
+            tasks: newTasks,
+        });
+        const newIndex = data.tasks.findIndex((i) => i.id === id);
+        data.tasks = [
+            ...data.tasks.slice(0, newIndex).concat(...data.tasks.slice(newIndex + 1)),
+        ];
+    }
+
+    openEdit(id, name, description, isFinished) {
         this.setState({
             modalVisible: true,
             edit: true,
             workingId: id,
             name,
             description,
-            thumbnailPhoto,
+            isFinished,
         });
-    }
-
-    async removeItem(id) {
-        let newBoard = [...this.state.boards];
-        // TODO: remove item by ID
-        const index = newBoard.findIndex((i) => i.id === id);
-        newBoard = await [
-            ...newBoard.slice(0, index).concat(...newBoard.slice(index + 1)),
-        ];
-        this.setState({ boards: newBoard });
     }
 
     setModalVisible(visible) {
@@ -93,30 +112,28 @@ class Boards extends Component {
 
     clearForm() {
         this.setState({
-            edit: false,
-            name: null,
-            workingId: null,
-            description: null,
-            thumbnailPhoto: null,
             modalVisible: false,
+            edit: false,
+            workingId: null,
+            name: null,
+            description: null,
+            isFinished: false,
         });
     }
 
     render() {
-        const { boards } = this.state;
-        const boardlist = boards.map((element) => (
-            <BoardElement
+        const { tasks, id } = this.state;
+        const list = tasks.map((element) => (
+            <Task
                 key={element.id}
                 id={element.id}
                 name={element.name}
+                isFinished={element.isFinished}
                 description={element.description}
-                thumbnailPhoto={element.thumbnailPhoto}
-                removeItem={this.removeItem}
                 openEdit={this.openEdit}
-                navigation={this.props.navigation}
+                removeTask={this.removeTask}
             />
         ));
-
         return (
             <View style={{ flex: 1, width: '100%' }}>
                 <Modal
@@ -126,9 +143,9 @@ class Boards extends Component {
                 >
                     <View style={styles.modalWrapper}>
                         {this.state.edit ? (
-                            <Text style={styles.heading}>Edit item</Text>
+                            <Text style={styles.heading}>Edit Task</Text>
                         ) : (
-                                <Text style={styles.heading}>Add new item</Text>
+                                <Text style={styles.heading}>Add new Task</Text>
                             )}
                         <View>
                             <TouchableOpacity onPress={() => this.clearForm()}>
@@ -138,7 +155,6 @@ class Boards extends Component {
                                 <Text style={styles.modalLabel}>Name</Text>
                                 <TextInput
                                     style={styles.modalInput}
-                                    label="Name"
                                     onChangeText={(name) => this.setState({ name })}
                                     value={this.state.name}
                                 />
@@ -149,38 +165,37 @@ class Boards extends Component {
                                 </Text>
                                 <TextInput
                                     style={styles.modalInput}
-                                    label="Description"
                                     onChangeText={(description) => this.setState({ description })}
                                     value={this.state.description}
                                 />
                             </View>
                             <View style={styles.formGroup}>
                                 <Text style={styles.modalLabel}>
-                                    Thumbnail Photo
+                                    Is Finished
                                 </Text>
-                                <TextInput
+                                <Switch
                                     style={styles.modalInput}
-                                    label="Thumbnail Photo"
-                                    onChangeText={(thumbnailPhoto) => this.setState({ thumbnailPhoto })}
-                                    value={this.state.thumbnailPhoto}
+                                    onValueChange={(isFinished) => this.setState({ isFinished })}
+                                    value={this.state.isFinished}
                                 />
                             </View>
                         </View>
                     </View>
                     <Button
                         disabled={
-                            !this.state.name || !this.state.thumbnailPhoto
+                            !this.state.name || !this.state.description
                         }
                         onPress={
-                            this.state.edit ? this.editItem : this.addToData
+                            this.state.edit ? this.editTask : this.addToTasks
                         }
                         style={styles.btn}
                         title="Save"
                     />
                 </Modal>
+
                 <View style={styles.container}>
-                    <Text style={styles.heading}>Your boards</Text>
-                    <ScrollView>{boardlist}</ScrollView>
+                    <Text style={styles.heading}>Your tasks</Text>
+                    <ScrollView>{list}</ScrollView>
                 </View>
                 <TouchableOpacity
                     style={styles.btn}
@@ -188,12 +203,16 @@ class Boards extends Component {
                         this.setModalVisible(!this.state.modalVisible);
                     }}
                 >
-                    <Text style={styles.btnText}>Add item!</Text>
+                    <Text style={styles.btnText}>Add task!</Text>
                 </TouchableOpacity>
             </View>
         );
     }
 }
+
+TaskScreen.propTypes = {
+    navigation: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -223,40 +242,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
     },
-
-    modalWrapper: {
-        flex: 1,
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: '#FFA400',
-    },
-
-    btnCloseModal: {
-        textTransform: 'uppercase',
-        fontSize: 25,
-        fontWeight: 'bold',
-        textAlign: 'right',
-    },
-    formGroup: {
-        marginBottom: 15,
-    },
-
-    modalLabel: {
-        fontSize: 16,
-        color: '#fff',
-        paddingLeft: 10,
-    },
-
-    modalInput: {
-        borderWidth: 0,
-        borderColor: '#303030',
-        borderRadius: 25,
-        backgroundColor: '#fff',
-        padding: 8,
-        paddingLeft: 15,
-        marginTop: 5,
-    },
 });
 
-export default Boards;
+export default TaskScreen;
