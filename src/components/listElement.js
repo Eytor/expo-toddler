@@ -21,56 +21,47 @@ const ListElement = (props) => {
                 onPress={() => navigation.navigate('Tasks', { id, title: name })}
             >
                 <Text style={styles.listItemHeading}>{name}</Text>
+                <View style={styles.buttonWrapper}>
+                    <View style={styles.edit}>
+                        <TouchableOpacity
+                            onPress={() => openEdit(id, name, color, boardId)}
+                        >
+                            <Image
+                                style={{ width: 15, height: 15 }}
+                                source={require('../../assets/cogwheel.png')}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => removeItem(id)}
+                        style={styles.deleteWrapper}
+                    >
+                        <View style={styles.arrowTop} />
+                        <View style={styles.arrowBot} />
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => openEdit(id, name, color, boardId)}
-            >
-                <Image
-                    style={{ width: 20, height: 20 }}
-                    source={require('../../assets/cogwheel.png')}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => removeItem(id)}
-                style={styles.deleteWrapper}
-            >
-                <View style={styles.arrowTop} />
-                <View style={styles.arrowBot} />
-            </TouchableOpacity>
-
         </View>
 
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFA400',
-        width: '100%',
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    heading: {
-        fontSize: 24,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    listItemContainer: {
-        backgroundColor: '#fff',
-        padding: 15,
-    },
     listItemWrapper: {
-        padding: 8,
+        padding: 15,
         paddingLeft: 15,
         borderLeftWidth: 3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    buttonWrapper: {
+        width: 60,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     deleteWrapper: {
-        position: 'absolute',
-        right: 5,
-        top: 15,
         width: 15,
         height: 15,
     },
