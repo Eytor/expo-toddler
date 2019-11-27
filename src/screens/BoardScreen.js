@@ -12,6 +12,7 @@ import {
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
 import BoardElement from '../components/boardElement';
+import BoardForm from '../components/Forms/BoardForm';
 
 class BoardScreen extends Component {
     constructor(props) {
@@ -33,32 +34,31 @@ class BoardScreen extends Component {
     }
 
     // eslint-disable-next-line react/sort-comp
-    addToData() {
+    addToData(name, description, thumbnailPhoto) {
+        console.log('add to data');
         const newBoard = [...this.state.boards];
         const newId = newBoard[newBoard.length - 1].id + 1;
         newBoard.push({
             id: newId,
-            name: this.state.name,
-            description: this.state.description,
-            thumbnailPhoto: this.state.thumbnailPhoto,
+            name,
+            description,
+            thumbnailPhoto,
         });
         this.setState({
             boards: newBoard,
-            name: null,
-            description: null,
-            thumbnailPhoto: null,
             modalVisible: false,
         });
     }
 
-    editItem() {
+    editItem(name, description, thumbnailPhoto) {
+        console.log('editing');
         const newBoard = [...this.state.boards];
         const index = newBoard.findIndex((i) => i.id === this.state.workingId);
         newBoard[index] = {
             id: this.state.workingId,
-            name: this.state.name,
-            description: this.state.description,
-            thumbnailPhoto: this.state.thumbnailPhoto,
+            name,
+            description,
+            thumbnailPhoto,
         };
         this.setState({
             boards: newBoard,
@@ -125,58 +125,14 @@ class BoardScreen extends Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                 >
-                    <View style={styles.modalWrapper}>
-                        {this.state.edit ? (
-                            <Text style={styles.heading}>Edit item</Text>
-                        ) : (
-                                <Text style={styles.heading}>Add new item</Text>
-                            )}
-                        <View>
-                            <TouchableOpacity onPress={() => this.clearForm()}>
-                                <Text style={styles.btnCloseModal}>x</Text>
-                            </TouchableOpacity>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>Name</Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Name"
-                                    onChangeText={(name) => this.setState({ name })}
-                                    value={this.state.name}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Description
-                                </Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Description"
-                                    onChangeText={(description) => this.setState({ description })}
-                                    value={this.state.description}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Thumbnail Photo
-                                </Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    label="Thumbnail Photo"
-                                    onChangeText={(thumbnailPhoto) => this.setState({ thumbnailPhoto })}
-                                    value={this.state.thumbnailPhoto}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                    <Button
-                        disabled={
-                            !this.state.name || !this.state.thumbnailPhoto
-                        }
-                        onPress={
-                            this.state.edit ? this.editItem : this.addToData
-                        }
-                        style={styles.btn}
-                        title="Save"
+                    <BoardForm
+                        name={this.state.name}
+                        description={this.state.description}
+                        image={this.state.thumbnailPhoto}
+                        edit={this.state.edit}
+                        editItem={this.editItem}
+                        addToData={this.addToData}
+                        clearForm={this.clearForm}
                     />
                 </Modal>
                 <View style={styles.container}>
