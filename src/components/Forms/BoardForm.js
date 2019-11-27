@@ -45,6 +45,11 @@ class BoardForm extends Component {
                             label="Name"
                             onChangeText={(name) => this.setState({ name })}
                         />
+                        {!this.state.name && (
+                            <Text style={{ color: '#D62828' }}>
+                                Name is required
+                            </Text>
+                        )}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Description</Text>
@@ -61,8 +66,13 @@ class BoardForm extends Component {
                             label="Thumbnail Photo"
                             onChangeText={(image) => this.setState({ image })}
                             value={this.state.image}
-                            style={styles.input}
+                            style={[styles.input, !this.state.image && styles.errorInput]}
                         />
+                        {!this.state.image && (
+                            <Text style={{ color: '#D62828' }}>
+                                Image is required
+                            </Text>
+                        )}
                     </View>
                 </View>
                 <Button
@@ -79,8 +89,34 @@ class BoardForm extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    btn: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 50,
+        width: '100%',
+        backgroundColor: '#4CB944',
+    },
+    heading: {
+        fontSize: 24,
+        color: '#fff',
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
+    btnCloseModal: {
+        textTransform: 'uppercase',
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    modalInput: {
+        borderWidth: 0,
+        borderColor: '#303030',
+        borderRadius: 25,
+        backgroundColor: '#fff',
+        padding: 8,
+        paddingLeft: 15,
+        marginTop: 5,
     },
     formGroup: {
         marginBottom: 15,
@@ -105,6 +141,10 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         backgroundColor: '#FFA400',
+    },
+    errorInput: {
+        borderWidth: 2,
+        borderColor: '#D62828',
     },
 });
 
