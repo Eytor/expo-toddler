@@ -136,6 +136,7 @@ class TaskScreen extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.modalVisible}
+                    onRequestClose={() => this.clearForm()}
                 >
                     <TaskForm
                         name={this.state.name}

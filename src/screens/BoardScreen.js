@@ -118,6 +118,7 @@ class BoardScreen extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.modalVisible}
+                    onRequestClose={() => this.clearForm()}
                 >
                     <BoardForm
                         name={this.state.name}
