@@ -6,7 +6,12 @@ import PropTypes from 'prop-types';
 
 const Task = (props) => {
     const {
-        id, isFinished, name, description, openEdit, removeTask,
+        id,
+        isFinished,
+        name,
+        description,
+        openEdit,
+        removeTask,
     } = props;
     return (
         <View key={id}>
