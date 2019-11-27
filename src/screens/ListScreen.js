@@ -140,6 +140,7 @@ class ListScreen extends Component {
                         animationType="slide"
                         transparent={false}
                         visible={this.state.modalVisible}
+                        onRequestClose={() => this.clearForm()}
                     >
                         <ListForm
                             name={this.state.name}
