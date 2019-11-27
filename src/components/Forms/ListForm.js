@@ -34,7 +34,10 @@ class ListForm extends Component {
 
     render() {
         const {
-            edit, addToData, editItem, clearForm,
+            edit,
+            addToData,
+            editItem,
+            clearForm,
         } = this.props;
         return (
             <View style={{ flex: 1 }}>
@@ -86,8 +89,7 @@ class ListForm extends Component {
                     </View>
                 </View>
                 <Button
-                    disabled={!this.state.name || !this.state.color}
-                    // eslint-disable-next-line no-unused-expressions
+                    disabled={!this.state.name}
                     onPress={() => {
                         edit
                             ? editItem(this.state.name, this.state.color)
@@ -95,6 +97,7 @@ class ListForm extends Component {
                     }}
                     style={styles.btn}
                     title="Save"
+                    color="#4CB944"
                 />
             </View>
         );
@@ -108,7 +111,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxHeight: 50,
         width: '100%',
-        backgroundColor: '#4CB944',
     },
     heading: {
         fontSize: 24,

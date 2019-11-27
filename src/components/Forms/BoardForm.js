@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, TextInput, Button, TouchableOpacity,
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Button,
+    TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -24,7 +29,10 @@ class BoardForm extends Component {
 
     render() {
         const {
-            edit, addToData, editItem, clearForm,
+            edit,
+            addToData,
+            editItem,
+            clearForm,
         } = this.props;
         return (
             <View style={{ flex: 1 }}>
@@ -38,11 +46,11 @@ class BoardForm extends Component {
                         <Text style={styles.heading}>Add new item</Text>
                     )}
                     <View style={styles.formGroup}>
-                        <Text style={styles.label}>name</Text>
+                        <Text style={styles.modalLabel}>Name</Text>
                         <TextInput
                             value={this.state.name}
                             style={styles.input}
-                            label="Name"
+                            modalLabel="Name"
                             onChangeText={(name) => this.setState({ name })}
                         />
                         {!this.state.name && (
@@ -52,21 +60,24 @@ class BoardForm extends Component {
                         )}
                     </View>
                     <View style={styles.formGroup}>
-                        <Text style={styles.label}>Description</Text>
+                        <Text style={styles.modalLabel}>Description</Text>
                         <TextInput
-                            label="Description"
+                            modalLabel="Description"
                             onChangeText={(description) => this.setState({ description })}
                             value={this.state.description}
                             style={styles.input}
                         />
                     </View>
                     <View style={styles.formGroup}>
-                        <Text style={styles.label}>Image</Text>
+                        <Text style={styles.modalLabel}>Image</Text>
                         <TextInput
-                            label="Thumbnail Photo"
+                            modalLabel="Thumbnail Photo"
                             onChangeText={(image) => this.setState({ image })}
                             value={this.state.image}
-                            style={[styles.input, !this.state.image && styles.errorInput]}
+                            style={[
+                                styles.input,
+                                !this.state.image && styles.errorInput,
+                            ]}
                         />
                         {!this.state.image && (
                             <Text style={{ color: '#D62828' }}>
@@ -76,12 +87,23 @@ class BoardForm extends Component {
                     </View>
                 </View>
                 <Button
-                    disabled={
-                        !this.state.name || !this.state.image
-                    }
-                    onPress={() => { edit ? editItem(this.state.name, this.state.description, this.state.image) : addToData(this.state.name, this.state.description, this.state.image); }}
+                    disabled={!this.state.name || !this.state.image}
+                    onPress={() => {
+                        edit
+                            ? editItem(
+                                this.state.name,
+                                this.state.description,
+                                this.state.image,
+                            )
+                            : addToData(
+                                this.state.name,
+                                this.state.description,
+                                this.state.image,
+                            );
+                    }}
                     style={styles.btn}
                     title="Save"
+                    color="#4CB944"
                 />
             </View>
         );
@@ -95,7 +117,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxHeight: 50,
         width: '100%',
-        backgroundColor: '#4CB944',
     },
     heading: {
         fontSize: 24,
@@ -121,7 +142,7 @@ const styles = StyleSheet.create({
     formGroup: {
         marginBottom: 15,
     },
-    label: {
+    modalLabel: {
         fontSize: 16,
         color: '#fff',
         paddingLeft: 10,
