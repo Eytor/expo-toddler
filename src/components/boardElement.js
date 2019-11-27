@@ -81,10 +81,6 @@ const styles = StyleSheet.create({
         height: undefined,
         minHeight: 100,
     },
-    boardListItemText: {
-        fontSize: 16,
-        color: '#303030',
-    },
     deleteWrapper: {
         position: 'absolute',
         right: 5,

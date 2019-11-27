@@ -183,17 +183,6 @@ const styles = StyleSheet.create({
     listItemContainer: {
         padding: 15,
     },
-    listItemWrapper: {
-        backgroundColor: '#fff',
-        padding: 8,
-        paddingLeft: 15,
-        borderLeftWidth: 3,
-    },
-    listItemHeading: {
-        fontSize: 16,
-        color: '#303030',
-        fontWeight: 'bold',
-    },
     btn: {
         flex: 1,
         justifyContent: 'center',
