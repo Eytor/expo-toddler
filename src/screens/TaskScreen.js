@@ -5,22 +5,21 @@ import {
     TouchableOpacity,
     StyleSheet,
     Modal,
-    TextInput,
-    Button,
-    Switch,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as data from '../../db/data.json';
 import Task from '../components/task';
+import TaskForm from '../components/Forms/TaskForm';
 
 class TaskScreen extends Component {
     constructor(props) {
         super(props);
         this.openEdit = this.openEdit.bind(this);
-        this.addToTasks = this.addToTasks.bind(this);
+        this.addToData = this.addToData.bind(this);
         this.editTask = this.editTask.bind(this);
         this.removeTask = this.removeTask.bind(this);
+        this.clearForm = this.clearForm.bind(this);
         this.state = {
             tasks: [],
             id: null,
@@ -39,35 +38,18 @@ class TaskScreen extends Component {
         this.setState({ tasks, id });
     }
 
-    addToTasks() {
-        const newTasks = [...this.state.tasks];
-        const newId = data.tasks[data.tasks.length - 1].id + 1;
-        const newTask = {
-            id: newId,
-            name: this.state.name,
-            description: this.state.description,
-            isFinished: this.state.isFinished,
-            listId: this.state.id,
-        };
-        newTasks.push(newTask);
-        this.setState({
-            tasks: newTasks,
-            name: null,
-            description: null,
-            isFinished: null,
-            modalVisible: false,
-        });
-        data.tasks.push(newTask);
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
     }
 
-    editTask() {
+    editTask(name, description, isFinished) {
         const newTasks = [...this.state.tasks];
         const index = newTasks.findIndex((i) => i.id === this.state.workingId);
         const newTask = {
             id: this.state.workingId,
-            name: this.state.name,
-            description: this.state.description,
-            isFinished: this.state.isFinished,
+            name,
+            description,
+            isFinished,
             listId: this.state.id,
         };
         newTasks[index] = newTask;
@@ -106,8 +88,22 @@ class TaskScreen extends Component {
         });
     }
 
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
+    addToData(name, description, isFinished) {
+        const newTasks = [...this.state.tasks];
+        const newId = data.tasks[data.tasks.length - 1].id + 1;
+        const newTask = {
+            id: newId,
+            name,
+            description,
+            isFinished,
+            listId: this.state.id,
+        };
+        newTasks.push(newTask);
+        this.setState({
+            tasks: newTasks,
+            modalVisible: false,
+        });
+        data.tasks.push(newTask);
     }
 
     clearForm() {
@@ -141,55 +137,14 @@ class TaskScreen extends Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                 >
-                    <View style={styles.modalWrapper}>
-                        {this.state.edit ? (
-                            <Text style={styles.heading}>Edit Task</Text>
-                        ) : (
-                                <Text style={styles.heading}>Add new Task</Text>
-                            )}
-                        <View>
-                            <TouchableOpacity onPress={() => this.clearForm()}>
-                                <Text style={styles.btnCloseModal}>x</Text>
-                            </TouchableOpacity>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>Name</Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    onChangeText={(name) => this.setState({ name })}
-                                    value={this.state.name}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Description
-                                </Text>
-                                <TextInput
-                                    style={styles.modalInput}
-                                    onChangeText={(description) => this.setState({ description })}
-                                    value={this.state.description}
-                                />
-                            </View>
-                            <View style={styles.formGroup}>
-                                <Text style={styles.modalLabel}>
-                                    Is Finished
-                                </Text>
-                                <Switch
-                                    style={styles.modalInput}
-                                    onValueChange={(isFinished) => this.setState({ isFinished })}
-                                    value={this.state.isFinished}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                    <Button
-                        disabled={
-                            !this.state.name || !this.state.description
-                        }
-                        onPress={
-                            this.state.edit ? this.editTask : this.addToTasks
-                        }
-                        style={styles.btn}
-                        title="Save"
+                    <TaskForm
+                        name={this.state.name}
+                        description={this.state.description}
+                        isFinished={this.state.isFinished}
+                        edit={this.state.edit}
+                        editTask={this.editTask}
+                        addToData={this.addToData}
+                        clearForm={this.clearForm}
                     />
                 </Modal>
 
