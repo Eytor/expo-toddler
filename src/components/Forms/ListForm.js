@@ -90,7 +90,6 @@ class ListForm extends Component {
                 </View>
                 <Button
                     disabled={!this.state.name}
-                    // eslint-disable-next-line no-unused-expressions
                     onPress={() => {
                         edit
                             ? editItem(this.state.name, this.state.color)

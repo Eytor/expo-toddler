@@ -51,6 +51,6 @@ module.exports = {
     "react/forbid-prop-types": 0,
     "react/prefer-stateless-function": 0,
     "global-require": 0,
-    "no-unused-expressions": "off"
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }]
   },
 };
