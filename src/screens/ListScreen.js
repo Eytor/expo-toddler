@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, ScrollView,
+    View,
+    Text,
+    StyleSheet,
+    Modal,
+    TextInput,
+    Button,
+    TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
 import ListElement from '../components/listElement';
+import ListForm from '../components/Forms/ListForm';
 
 class ListScreen extends Component {
     constructor(props) {
@@ -35,14 +43,13 @@ class ListScreen extends Component {
         this.setState({ modalVisible: visible });
     }
 
-    addToData() {
+    addToData(name, color) {
         const newLists = [...this.state.lists];
         const newId = data.lists[data.lists.length - 1].id + 1;
-        console.log(this.state);
         const newList = {
             id: newId,
-            name: this.state.name,
-            color: this.state.color,
+            name,
+            color,
             boardId: this.state.boardId,
         };
         newLists.push(newList);
@@ -66,20 +73,20 @@ class ListScreen extends Component {
             lists: newList,
         });
         const newIndex = data.lists.findIndex((i) => i.id === id);
-        console.log(newIndex);
         data.lists = [
-            ...data.lists.slice(0, newIndex).concat(...data.lists.slice(newIndex + 1)),
+            ...data.lists
+                .slice(0, newIndex)
+                .concat(...data.lists.slice(newIndex + 1)),
         ];
-        console.log(data.lists);
     }
 
-    editItem() {
+    editItem(name, color) {
         const newLists = [...this.state.lists];
         const index = newLists.findIndex((i) => i.id === this.state.workingId);
         const newList = {
             id: this.state.workingId,
-            name: this.state.name,
-            color: this.state.color,
+            name,
+            color,
             boardId: this.state.boardId,
         };
         newLists[index] = newList;
@@ -113,28 +120,6 @@ class ListScreen extends Component {
         });
     }
 
-
-    // componentWillUnmount() {
-    //     // Líklegast óþarfi ef við manipulatum um leið og við breytum
-    //     this.state.lists.map((element) => {
-    //         const index = data.lists.findIndex((list) => list.id === element.id);
-    //         if (index !== -1) {
-    //             if (
-    //                 data.lists.findIndex(
-    //                     (list) => list.id === element.id
-    //                         && list.name === element.name
-    //                         && list.color === element.color
-    //                         && list.listId === element.listId,
-    //                 ) !== -1
-    //             ) {
-    //                 data.lists[index] = element;
-    //             }
-    //         } else {
-    //             data.lists.push(element);
-    //         }
-    //     });
-    // }
-
     render() {
         const list = this.state.lists.map((element, index, array) => (
             <ListElement
@@ -152,56 +137,19 @@ class ListScreen extends Component {
         ));
         return (
             <View style={{ flex: 1, width: '100%' }}>
-
                 <View style={styles.container}>
                     <Modal
                         animationType="slide"
                         transparent={false}
                         visible={this.state.modalVisible}
                     >
-                        <View style={styles.modalWrapper}>
-                            {this.state.edit ? (
-                                <Text style={styles.heading}>Edit item</Text>
-                            ) : (
-                                <Text style={styles.heading}>Add new item</Text>
-                            )}
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => this.clearForm()}
-                                >
-                                    <Text style={styles.btnCloseModal}>x</Text>
-                                </TouchableOpacity>
-                                <View style={styles.formGroup}>
-                                    <Text style={styles.modalLabel}>Name</Text>
-                                    <TextInput
-                                        style={styles.modalInput}
-                                        label="Name"
-                                        onChangeText={(name) => this.setState({ name })}
-                                        value={this.state.name}
-                                    />
-                                </View>
-                                <View style={styles.formGroup}>
-                                    <Text style={styles.modalLabel}>
-                                        Color
-                                    </Text>
-                                    <TextInput
-                                        style={styles.modalInput}
-                                        label="Color"
-                                        onChangeText={(color) => this.setState({ color })}
-                                        value={this.state.color}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                        <Button
-                            disabled={
-                                !this.state.name || !this.state.color
-                            }
-                            onPress={
-                                this.state.edit ? this.editItem : this.addToData
-                            }
-                            style={styles.btn}
-                            title="Save"
+                        <ListForm
+                            name={this.state.name}
+                            color={this.state.color}
+                            edit={this.state.edit}
+                            addToData={this.addToData}
+                            editItem={this.editItem}
+                            clearForm={this.clearForm}
                         />
                     </Modal>
                     <Text style={styles.heading}>Lists</Text>
