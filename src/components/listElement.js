@@ -18,7 +18,7 @@ const ListElement = (props) => {
                         ? { marginBottom: 0 }
                         : { marginBottom: 15 },
                 ]}
-                onPress={() => navigation.navigate('Tasks', { id, title: name })}
+                onPress={() => navigation.navigate('Tasks', { id, title: name, boardId })}
             >
                 <Text style={styles.listItemHeading}>{name}</Text>
                 <View style={styles.buttonWrapper}>

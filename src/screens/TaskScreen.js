@@ -42,7 +42,7 @@ class TaskScreen extends Component {
         this.setState({ modalVisible: visible });
     }
 
-    editTask(name, description, isFinished) {
+    editTask(name, description, isFinished, selectedListId) {
         const newTasks = [...this.state.tasks];
         const index = newTasks.findIndex((i) => i.id === this.state.workingId);
         const newTask = {
@@ -50,15 +50,15 @@ class TaskScreen extends Component {
             name,
             description,
             isFinished,
-            listId: this.state.id,
+            listId: selectedListId,
         };
         newTasks[index] = newTask;
-        this.setState({
-            tasks: newTasks,
-        });
         data.tasks[
             data.tasks.findIndex((i) => i.id === this.state.workingId)
         ] = newTask;
+        this.setState({
+            tasks: data.tasks.filter((element) => element.listId === this.state.id),
+        });
         this.clearForm();
     }
 
@@ -118,6 +118,7 @@ class TaskScreen extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { tasks, id } = this.state;
         const list = tasks.map((element) => (
             <Task
@@ -128,6 +129,7 @@ class TaskScreen extends Component {
                 description={element.description}
                 openEdit={this.openEdit}
                 removeTask={this.removeTask}
+                listId={this.state.id}
             />
         ));
         return (
@@ -145,6 +147,8 @@ class TaskScreen extends Component {
                         editTask={this.editTask}
                         addToData={this.addToData}
                         clearForm={this.clearForm}
+                        boardId={this.props.navigation.state.params.boardId}
+                        listId={this.state.id}
                     />
                 </Modal>
 
