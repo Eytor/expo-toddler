@@ -4,10 +4,7 @@ import {
     Text,
     StyleSheet,
     Modal,
-    TextInput,
-    Button,
     TouchableOpacity,
-    ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';

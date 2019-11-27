@@ -118,8 +118,7 @@ class TaskScreen extends Component {
     }
 
     render() {
-        console.log(this.props);
-        const { tasks, id } = this.state;
+        const { tasks } = this.state;
         const list = tasks.map((element) => (
             <Task
                 key={element.id}

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    Button,
     Modal,
-    TextInput,
     TouchableOpacity,
     StyleSheet,
     ScrollView,
@@ -33,9 +31,11 @@ class BoardScreen extends Component {
         };
     }
 
-    // eslint-disable-next-line react/sort-comp
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
     addToData(name, description, thumbnailPhoto) {
-        console.log('add to data');
         const newBoard = [...this.state.boards];
         const newId = newBoard[newBoard.length - 1].id + 1;
         newBoard.push({
@@ -51,7 +51,6 @@ class BoardScreen extends Component {
     }
 
     editItem(name, description, thumbnailPhoto) {
-        console.log('editing');
         const newBoard = [...this.state.boards];
         const index = newBoard.findIndex((i) => i.id === this.state.workingId);
         newBoard[index] = {
@@ -80,16 +79,11 @@ class BoardScreen extends Component {
 
     async removeItem(id) {
         let newBoard = [...this.state.boards];
-        // TODO: remove item by ID
         const index = newBoard.findIndex((i) => i.id === id);
         newBoard = await [
             ...newBoard.slice(0, index).concat(...newBoard.slice(index + 1)),
         ];
         this.setState({ boards: newBoard });
-    }
-
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
     }
 
     clearForm() {
@@ -172,42 +166,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'normal',
         color: '#fff',
-    },
-    heading: {
-        fontSize: 24,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    modalWrapper: {
-        flex: 1,
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: '#FFA400',
-    },
-    btnCloseModal: {
-        textTransform: 'uppercase',
-        fontSize: 25,
-        fontWeight: 'bold',
-        textAlign: 'right',
-    },
-    formGroup: {
-        marginBottom: 15,
-    },
-    modalLabel: {
-        fontSize: 16,
-        color: '#fff',
-        paddingLeft: 10,
-    },
-    modalInput: {
-        borderWidth: 0,
-        borderColor: '#303030',
-        borderRadius: 25,
-        backgroundColor: '#fff',
-        padding: 8,
-        paddingLeft: 15,
-        marginTop: 5,
     },
 });
 

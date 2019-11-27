@@ -6,7 +6,13 @@ import {
 
 const BoardElement = (props) => {
     const {
-        id, name, description, thumbnailPhoto, removeItem, openEdit, navigation,
+        id,
+        name,
+        description,
+        thumbnailPhoto,
+        removeItem,
+        openEdit,
+        navigation,
     } = props;
     return (
         <TouchableOpacity

@@ -6,7 +6,15 @@ import {
 
 const ListElement = (props) => {
     const {
-        id, name, color, index, length, navigation, openEdit, boardId, removeItem,
+        id,
+        name,
+        color,
+        index,
+        length,
+        navigation,
+        openEdit,
+        boardId,
+        removeItem,
     } = props;
     return (
         <View>
