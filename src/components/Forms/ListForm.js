@@ -86,7 +86,7 @@ class ListForm extends Component {
                     </View>
                 </View>
                 <Button
-                    disabled={!this.state.name || !this.state.color}
+                    disabled={!this.state.name}
                     // eslint-disable-next-line no-unused-expressions
                     onPress={() => {
                         edit
@@ -95,6 +95,7 @@ class ListForm extends Component {
                     }}
                     style={styles.btn}
                     title="Save"
+                    color="#4CB944"
                 />
             </View>
         );
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         maxHeight: 50,
         width: '100%',
-        backgroundColor: '#4CB944',
     },
     heading: {
         fontSize: 24,
