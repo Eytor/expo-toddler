@@ -34,7 +34,10 @@ class ListForm extends Component {
 
     render() {
         const {
-            edit, addToData, editItem, clearForm,
+            edit,
+            addToData,
+            editItem,
+            clearForm,
         } = this.props;
         return (
             <View style={{ flex: 1 }}>

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {
-    View, Text, StyleSheet, TextInput, Button, TouchableOpacity,
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Button,
+    TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -24,7 +29,10 @@ class BoardForm extends Component {
 
     render() {
         const {
-            edit, addToData, editItem, clearForm,
+            edit,
+            addToData,
+            editItem,
+            clearForm,
         } = this.props;
         return (
             <View style={{ flex: 1 }}>
@@ -66,7 +74,10 @@ class BoardForm extends Component {
                             modalLabel="Thumbnail Photo"
                             onChangeText={(image) => this.setState({ image })}
                             value={this.state.image}
-                            style={[styles.input, !this.state.image && styles.errorInput]}
+                            style={[
+                                styles.input,
+                                !this.state.image && styles.errorInput,
+                            ]}
                         />
                         {!this.state.image && (
                             <Text style={{ color: '#D62828' }}>
@@ -76,10 +87,20 @@ class BoardForm extends Component {
                     </View>
                 </View>
                 <Button
-                    disabled={
-                        !this.state.name || !this.state.image
-                    }
-                    onPress={() => { edit ? editItem(this.state.name, this.state.description, this.state.image) : addToData(this.state.name, this.state.description, this.state.image); }}
+                    disabled={!this.state.name || !this.state.image}
+                    onPress={() => {
+                        edit
+                            ? editItem(
+                                this.state.name,
+                                this.state.description,
+                                this.state.image,
+                            )
+                            : addToData(
+                                this.state.name,
+                                this.state.description,
+                                this.state.image,
+                            );
+                    }}
                     style={styles.btn}
                     title="Save"
                     color="#4CB944"
