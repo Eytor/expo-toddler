@@ -4,6 +4,7 @@ import {
     Text, View, Image, TouchableOpacity,
 } from 'react-native';
 import styles from './BoardElement.styles';
+import CloseArrow from '../CloseArrow/CloseArrow';
 
 const BoardElement = ({
     id,
@@ -31,13 +32,7 @@ const BoardElement = ({
                 <Text>{description}</Text>
             </View>
         </View>
-        <TouchableOpacity
-            onPress={() => removeItem(id)}
-            style={styles.deleteWrapper}
-        >
-            <View style={styles.arrowTop} />
-            <View style={styles.arrowBot} />
-        </TouchableOpacity>
+        <CloseArrow closeFunction={removeItem(id)} />
         <View style={styles.edit}>
             <TouchableOpacity
                 onPress={() => openEdit(id, name, description, thumbnailPhoto)}
