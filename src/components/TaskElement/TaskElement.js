@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './TaskElement.styles';
+import CloseArrow from '../CloseArrow/CloseArrow';
 
 const Task = ({
     id,
@@ -16,13 +17,7 @@ const Task = ({
     <View key={id}>
         <Text style={styles.taskHeading}>{name}</Text>
         <View style={[styles.contentWrapper, isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
-            <TouchableOpacity
-                onPress={() => removeTask(id)}
-                style={styles.deleteWrapper}
-            >
-                <View style={styles.arrowTop} />
-                <View style={styles.arrowBot} />
-            </TouchableOpacity>
+            <CloseArrow closeFunction={() => removeTask(id)} right={-30} top={0} />
             <Text style={styles.text}>{description}</Text>
             <View style={styles.edit}>
                 <TouchableOpacity

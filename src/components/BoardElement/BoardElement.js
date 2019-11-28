@@ -4,6 +4,7 @@ import {
     Text, View, Image, TouchableOpacity,
 } from 'react-native';
 import styles from './BoardElement.styles';
+import CloseArrow from '../CloseArrow/CloseArrow';
 
 const BoardElement = ({
     id,
@@ -18,6 +19,8 @@ const BoardElement = ({
         style={styles.boardListItem}
         onPress={() => navigation.navigate('Board', { id, title: name })}
     >
+
+        <CloseArrow closeFunction={() => { removeItem(id); }} right={-5} top={5} />
         <Text style={styles.heading}>{name}</Text>
         <View style={styles.contentWrapper}>
             <View style={styles.imageWrapper}>
@@ -31,13 +34,6 @@ const BoardElement = ({
                 <Text>{description}</Text>
             </View>
         </View>
-        <TouchableOpacity
-            onPress={() => removeItem(id)}
-            style={styles.deleteWrapper}
-        >
-            <View style={styles.arrowTop} />
-            <View style={styles.arrowBot} />
-        </TouchableOpacity>
         <View style={styles.edit}>
             <TouchableOpacity
                 onPress={() => openEdit(id, name, description, thumbnailPhoto)}

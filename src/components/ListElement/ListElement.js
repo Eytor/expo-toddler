@@ -4,6 +4,7 @@ import {
     Text, View, TouchableOpacity, Image,
 } from 'react-native';
 import styles from './ListElement.styles';
+import CloseArrow from '../CloseArrow/CloseArrow';
 
 const ListElement = ({
     id,
@@ -39,13 +40,7 @@ const ListElement = ({
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                    onPress={() => removeItem(id)}
-                    style={styles.deleteWrapper}
-                >
-                    <View style={styles.arrowTop} />
-                    <View style={styles.arrowBot} />
-                </TouchableOpacity>
+                <CloseArrow closeFunction={() => removeItem(id)} right={0} top={0} />
             </View>
         </TouchableOpacity>
     </View>

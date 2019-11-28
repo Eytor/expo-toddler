@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './BoardForm.styles';
+import CloseArrow from '../../CloseArrow/CloseArrow';
 
 class BoardForm extends Component {
     constructor(props) {
@@ -37,13 +38,7 @@ class BoardForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity
-                        style={styles.deleteWrapper}
-                        onPress={() => clearForm()}
-                    >
-                        <View style={styles.arrowTop} />
-                        <View style={styles.arrowBot} />
-                    </TouchableOpacity>
+                    <CloseArrow closeFunction={() => clearForm()} width={20} height={20} top={5} />
                     {edit ? (
                         <Text style={styles.heading}>Edit Board</Text>
                     ) : (
