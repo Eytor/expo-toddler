@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Text,
-    View,
-    Modal,
-    TouchableOpacity,
-    ScrollView,
+    Text, View, Modal, TouchableOpacity, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import * as data from '../../../resources/data.json';
@@ -23,6 +19,8 @@ class BoardScreen extends Component {
         this.clearForm = this.clearForm.bind(this);
         this.state = {
             boards: data.boards,
+            filteredBoards: data.boards,
+            filterString: '',
             modalVisible: false,
             edit: false,
             workingId: null,
@@ -45,10 +43,13 @@ class BoardScreen extends Component {
             description,
             thumbnailPhoto,
         });
-        this.setState({
-            boards: newBoard,
-            modalVisible: false,
-        });
+        this.setState(
+            {
+                boards: newBoard,
+                modalVisible: false,
+            },
+            () => this.filterBoards(this.state.filterString),
+        );
     }
 
     editItem(name, description, thumbnailPhoto) {
@@ -60,10 +61,13 @@ class BoardScreen extends Component {
             description,
             thumbnailPhoto,
         };
-        this.setState({
-            boards: newBoard,
-            modalVisible: false,
-        });
+        this.setState(
+            {
+                boards: newBoard,
+                modalVisible: false,
+            },
+            () => this.filterBoards(this.state.filterString),
+        );
         this.clearForm();
     }
 
@@ -85,6 +89,7 @@ class BoardScreen extends Component {
             ...newBoard.slice(0, index).concat(...newBoard.slice(index + 1)),
         ];
         this.setState({ boards: newBoard });
+        this.filterBoards(this.state.filterString);
     }
 
     clearForm() {
@@ -98,9 +103,20 @@ class BoardScreen extends Component {
         });
     }
 
+    filterBoards(text) {
+        const newBoards = [...this.state.boards].filter(
+            (element) => element.name.toLowerCase().includes(text.toLowerCase())
+                || (element.description
+                    && element.description
+                        .toLowerCase()
+                        .includes(text.toLowerCase())),
+        );
+        this.setState({ filteredBoards: newBoards, filterString: text });
+    }
+
     render() {
-        const { boards } = this.state;
-        const boardlist = boards.map((element) => (
+        const { filteredBoards } = this.state;
+        const boardlist = filteredBoards.map((element) => (
             <BoardElement
                 key={element.id}
                 id={element.id}
@@ -132,7 +148,7 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <FilterElement filter={(input) => console.log(input)} />
+                    <FilterElement filter={(input) => this.filterBoards(input)} />
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity
