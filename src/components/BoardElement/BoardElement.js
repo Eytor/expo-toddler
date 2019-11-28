@@ -19,6 +19,8 @@ const BoardElement = ({
         style={styles.boardListItem}
         onPress={() => navigation.navigate('Board', { id, title: name })}
     >
+
+        <CloseArrow closeFunction={() => { removeItem(id); }} />
         <Text style={styles.heading}>{name}</Text>
         <View style={styles.contentWrapper}>
             <View style={styles.imageWrapper}>
@@ -32,7 +34,6 @@ const BoardElement = ({
                 <Text>{description}</Text>
             </View>
         </View>
-        <CloseArrow closeFunction={() => { removeItem(id); }} />
         <View style={styles.edit}>
             <TouchableOpacity
                 onPress={() => openEdit(id, name, description, thumbnailPhoto)}
