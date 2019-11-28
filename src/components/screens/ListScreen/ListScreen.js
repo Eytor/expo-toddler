@@ -11,6 +11,7 @@ import * as data from '../../../resources/data.json';
 import ListElement from '../../ListElement/ListElement';
 import ListForm from '../../Forms/ListForm/ListForm';
 import styles from './ListScreen.styles';
+import FilterElement from '../../FilterElement/FilterElement';
 
 class ListScreen extends Component {
     constructor(props) {
@@ -20,9 +21,12 @@ class ListScreen extends Component {
         this.openEdit = this.openEdit.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.clearForm = this.clearForm.bind(this);
+        this.filterLists = this.filterLists.bind(this);
         this.state = {
             lists: [],
             workingId: null,
+            filteredLists: [],
+            filterString: '',
             modalVisible: false,
             edit: false,
             name: null,
@@ -34,7 +38,7 @@ class ListScreen extends Component {
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
         const list = data.lists.filter((element) => element.boardId === id);
-        this.setState({ lists: list, boardId: id });
+        this.setState({ lists: list, boardId: id, filteredLists: list });
     }
 
     setModalVisible(visible) {
@@ -56,7 +60,8 @@ class ListScreen extends Component {
             name: null,
             color: null,
             modalVisible: false,
-        });
+        },
+        () => this.filterLists(this.state.filterString));
         data.lists.push(newList);
     }
 
@@ -69,7 +74,8 @@ class ListScreen extends Component {
         ];
         this.setState({
             lists: newList,
-        });
+        },
+        () => this.filterLists(this.state.filterString));
         const newIndex = data.lists.findIndex((i) => i.id === id);
         data.lists = [
             ...data.lists
@@ -91,7 +97,8 @@ class ListScreen extends Component {
         this.setState({
             lists: newLists,
             modalVisible: false,
-        });
+        },
+        () => this.filterLists(this.state.filterString));
         data.lists[
             data.lists.findIndex((i) => i.id === this.state.workingId)
         ] = newList;
@@ -108,6 +115,14 @@ class ListScreen extends Component {
         });
     }
 
+    filterLists(text) {
+        const newLists = [...this.state.lists].filter(
+            (element) => element.name.toLowerCase().includes(text.toLowerCase())
+                || element.color.toLowerCase().includes(text.toLowerCase()),
+        );
+        this.setState({ filteredLists: newLists, filterString: text });
+    }
+
     clearForm() {
         this.setState({
             workingId: null,
@@ -119,7 +134,8 @@ class ListScreen extends Component {
     }
 
     render() {
-        const list = this.state.lists.map((element, index, array) => (
+        const { filteredLists } = this.state;
+        const list = filteredLists.map((element, index, array) => (
             <ListElement
                 key={element.id}
                 id={element.id}
@@ -151,6 +167,7 @@ class ListScreen extends Component {
                             clearForm={this.clearForm}
                         />
                     </Modal>
+                    <FilterElement filter={this.filterLists} />
                     <Text style={styles.heading}>Lists</Text>
                     <ScrollView style={styles.listItemContainer}>{list}</ScrollView>
                 </View>
