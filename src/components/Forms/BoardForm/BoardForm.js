@@ -37,8 +37,12 @@ class BoardForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity onPress={() => clearForm()}>
-                        <Text style={styles.btnCloseModal}>x</Text>
+                    <TouchableOpacity
+                        style={styles.deleteWrapper}
+                        onPress={() => clearForm()}
+                    >
+                        <View style={styles.arrowTop} />
+                        <View style={styles.arrowBot} />
                     </TouchableOpacity>
                     {edit ? (
                         <Text style={styles.heading}>Edit Board</Text>
