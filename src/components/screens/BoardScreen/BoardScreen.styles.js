@@ -5,9 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFA400',
         width: '100%',
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
+        padding: 15,
     },
     btn: {
         flex: 1,

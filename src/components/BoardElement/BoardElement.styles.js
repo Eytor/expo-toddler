@@ -13,7 +13,7 @@ export default StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         backgroundColor: '#fff',
-        marginBottom: 30,
+        marginBottom: 15,
         position: 'relative',
     },
     contentWrapper: {

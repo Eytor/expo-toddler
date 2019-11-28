@@ -6,6 +6,6 @@ export default StyleSheet.create({
         paddingLeft: 15,
         borderRadius: 25,
         backgroundColor: 'white',
-        marginBottom: 30,
+        marginBottom: 15,
     },
 });
