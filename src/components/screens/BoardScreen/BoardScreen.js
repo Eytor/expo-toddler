@@ -7,9 +7,9 @@ import {
     ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import * as data from '../../db/data.json';
+import * as data from '../../../../db/data.json';
 import BoardElement from '../boardElement';
-import BoardForm from '../components/Forms/BoardForm';
+import BoardForm from '../Forms/BoardForm';
 import styles from './BoardScreen.styles';
 
 class BoardScreen extends Component {
