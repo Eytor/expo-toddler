@@ -17,6 +17,7 @@ class BoardScreen extends Component {
         this.openEdit = this.openEdit.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.clearForm = this.clearForm.bind(this);
+        this.filterBoards = this.filterBoards.bind(this);
         this.state = {
             boards: data.boards,
             filteredBoards: data.boards,
@@ -148,7 +149,7 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <FilterElement filter={(input) => this.filterBoards(input)} />
+                    <FilterElement filter={this.filterBoards} />
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity

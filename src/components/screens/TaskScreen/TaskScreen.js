@@ -11,6 +11,7 @@ import * as data from '../../../resources/data.json';
 import Task from '../../TaskElement/TaskElement';
 import TaskForm from '../../Forms/TaskForm/TaskForm';
 import styles from './TaskScreen.styles';
+import FilterElement from '../../FilterElement/FilterElement';
 
 class TaskScreen extends Component {
     constructor(props) {
@@ -20,8 +21,11 @@ class TaskScreen extends Component {
         this.editTask = this.editTask.bind(this);
         this.removeTask = this.removeTask.bind(this);
         this.clearForm = this.clearForm.bind(this);
+        this.filterTasks = this.filterTasks.bind(this);
         this.state = {
             tasks: [],
+            filteredTasks: [],
+            filterString: '',
             id: null,
             name: null,
             description: null,
@@ -35,7 +39,7 @@ class TaskScreen extends Component {
     componentWillMount() {
         const { id } = this.props.navigation.state.params;
         const tasks = data.tasks.filter((element) => element.listId === id);
-        this.setState({ tasks, id });
+        this.setState({ tasks, id, filteredTasks: tasks });
     }
 
     setModalVisible(visible) {
@@ -58,7 +62,7 @@ class TaskScreen extends Component {
         ] = newTask;
         this.setState({
             tasks: data.tasks.filter((element) => element.listId === this.state.id),
-        });
+        }, () => this.filterTasks(this.state.filterString));
         this.clearForm();
     }
 
@@ -70,7 +74,7 @@ class TaskScreen extends Component {
         ];
         this.setState({
             tasks: newTasks,
-        });
+        }, () => this.filterTasks(this.state.filterString));
         const newIndex = data.tasks.findIndex((i) => i.id === id);
         data.tasks = [
             ...data.tasks.slice(0, newIndex).concat(...data.tasks.slice(newIndex + 1)),
@@ -102,7 +106,7 @@ class TaskScreen extends Component {
         this.setState({
             tasks: newTasks,
             modalVisible: false,
-        });
+        }, () => this.filterTasks(this.state.filterString));
         data.tasks.push(newTask);
     }
 
@@ -117,9 +121,20 @@ class TaskScreen extends Component {
         });
     }
 
+    filterTasks(text) {
+        const newTasks = [...this.state.tasks].filter(
+            (element) => element.name.toLowerCase().includes(text.toLowerCase())
+                || element.description
+                    .toLowerCase()
+                    .includes(text.toLowerCase()),
+        );
+        this.setState({ filteredTasks: newTasks, filterString: text });
+    }
+
+
     render() {
-        const { tasks } = this.state;
-        const list = tasks.map((element) => (
+        const { filteredTasks } = this.state;
+        const list = filteredTasks.map((element) => (
             <Task
                 key={element.id}
                 id={element.id}
@@ -153,6 +168,7 @@ class TaskScreen extends Component {
                 </Modal>
 
                 <View style={styles.container}>
+                    <FilterElement filter={this.filterTasks} />
                     <Text style={styles.heading}>Your tasks</Text>
                     <ScrollView>{list}</ScrollView>
                 </View>
