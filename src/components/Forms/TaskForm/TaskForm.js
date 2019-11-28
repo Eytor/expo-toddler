@@ -9,7 +9,7 @@ import {
     Picker,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import * as data from '../../../db/data.json';
+import * as data from '../../../resources/data.json';
 import styles from './Taskform.styles';
 
 class TaskForm extends Component {

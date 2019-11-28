@@ -5,7 +5,14 @@ import {
 } from 'react-native';
 import styles from './BoardElement.styles';
 
-const BoardElement = ({id, name, description, thumbnailPhoto, removeItem, openEdit, navigation
+const BoardElement = ({
+    id,
+    name,
+    description,
+    thumbnailPhoto,
+    removeItem,
+    openEdit,
+    navigation,
 }) => (
     <TouchableOpacity
         style={styles.boardListItem}

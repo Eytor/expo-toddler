@@ -5,33 +5,38 @@ import {
 import PropTypes from 'prop-types';
 import styles from './TaskElement.styles';
 
-const Task = ({id, isFinished, name, description, openEdit, removeTask}) => {
-    return (
-        <View key={id}>
-            <Text style={styles.taskHeading}>{name}</Text>
-            <View style={[styles.contentWrapper, isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
+const Task = ({
+    id,
+    isFinished,
+    name,
+    description,
+    openEdit,
+    removeTask,
+}) => (
+    <View key={id}>
+        <Text style={styles.taskHeading}>{name}</Text>
+        <View style={[styles.contentWrapper, isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
+            <TouchableOpacity
+                onPress={() => removeTask(id)}
+                style={styles.deleteWrapper}
+            >
+                <View style={styles.arrowTop} />
+                <View style={styles.arrowBot} />
+            </TouchableOpacity>
+            <Text style={styles.text}>{description}</Text>
+            <View style={styles.edit}>
                 <TouchableOpacity
-                    onPress={() => removeTask(id)}
-                    style={styles.deleteWrapper}
+                    onPress={() => openEdit(id, name, description, isFinished)}
                 >
-                    <View style={styles.arrowTop} />
-                    <View style={styles.arrowBot} />
+                    <Image
+                        style={{ width: 20, height: 20 }}
+                        source={require('../../resources/cogwheel.png')}
+                    />
                 </TouchableOpacity>
-                <Text style={styles.text}>{description}</Text>
-                <View style={styles.edit}>
-                    <TouchableOpacity
-                        onPress={() => openEdit(id, name, description, isFinished)}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../../resources/cogwheel.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
             </View>
         </View>
-    );
-};
+    </View>
+);
 
 Task.propTypes = {
     id: PropTypes.number.isRequired,

@@ -5,44 +5,52 @@ import {
 } from 'react-native';
 import styles from './ListElement.styles';
 
-const ListElement = ({id, name, color, index, length, navigation, openEdit, boardId, removeItem}) => {
-    return (
-        <View>
-            <TouchableOpacity
-                style={[
-                    styles.listItemWrapper,
-                    { borderColor: color },
-                    index === length - 1
-                        ? { marginBottom: 0 }
-                        : { marginBottom: 15 },
-                ]}
-                onPress={() => navigation.navigate('Tasks', { id, title: name, boardId })}
-            >
-                <Text style={styles.listItemHeading}>{name}</Text>
-                <View style={styles.buttonWrapper}>
-                    <View style={styles.edit}>
-                        <TouchableOpacity
-                            onPress={() => openEdit(id, name, color, boardId)}
-                        >
-                            <Image
-                                style={{ width: 15, height: 15 }}
-                                source={require('../../resources/cogwheel.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
+const ListElement = ({
+    id,
+    name,
+    color,
+    index,
+    length,
+    navigation,
+    openEdit,
+    boardId,
+    removeItem,
+}) => (
+    <View>
+        <TouchableOpacity
+            style={[
+                styles.listItemWrapper,
+                { borderColor: color },
+                index === length - 1
+                    ? { marginBottom: 0 }
+                    : { marginBottom: 15 },
+            ]}
+            onPress={() => navigation.navigate('Tasks', { id, title: name, boardId })}
+        >
+            <Text style={styles.listItemHeading}>{name}</Text>
+            <View style={styles.buttonWrapper}>
+                <View style={styles.edit}>
                     <TouchableOpacity
-                        onPress={() => removeItem(id)}
-                        style={styles.deleteWrapper}
+                        onPress={() => openEdit(id, name, color, boardId)}
                     >
-                        <View style={styles.arrowTop} />
-                        <View style={styles.arrowBot} />
+                        <Image
+                            style={{ width: 15, height: 15 }}
+                            source={require('../../resources/cogwheel.png')}
+                        />
                     </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity
+                    onPress={() => removeItem(id)}
+                    style={styles.deleteWrapper}
+                >
+                    <View style={styles.arrowTop} />
+                    <View style={styles.arrowBot} />
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    </View>
 
-    );
-};
+);
 
 ListElement.propTypes = {
     id: PropTypes.number.isRequired,
