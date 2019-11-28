@@ -13,7 +13,7 @@ class FilterElement extends Component {
 
     render() {
         const { filter } = this.props;
-        return <TextInput style={styles.input} onChangeText={(text) => filter(text)} />;
+        return <TextInput placeholder="Search here" style={styles.input} onChangeText={(text) => filter(text)} />;
     }
 }
 
