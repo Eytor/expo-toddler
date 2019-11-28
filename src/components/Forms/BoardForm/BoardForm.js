@@ -49,7 +49,7 @@ class BoardForm extends Component {
                         <Text style={styles.modalLabel}>Name</Text>
                         <TextInput
                             value={this.state.name}
-                            style={styles.input}
+                            style={[styles.input, !this.state.name && styles.errorInput]}
                             modalLabel="Name"
                             onChangeText={(name) => this.setState({ name })}
                         />
