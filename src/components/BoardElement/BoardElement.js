@@ -20,7 +20,7 @@ const BoardElement = ({
         onPress={() => navigation.navigate('Board', { id, title: name })}
     >
 
-        <CloseArrow closeFunction={() => { removeItem(id); }} right={-5} top={5} />
+        <CloseArrow closeFunction={() => { removeItem(id); }} right={5} top={5} />
         <Text style={styles.heading}>{name}</Text>
         <View style={styles.contentWrapper}>
             <View style={styles.imageWrapper}>

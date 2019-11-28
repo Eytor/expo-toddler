@@ -4,7 +4,6 @@ import {
     Text,
     TextInput,
     Button,
-    TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './BoardForm.styles';
@@ -38,7 +37,13 @@ class BoardForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <CloseArrow closeFunction={() => clearForm()} width={20} height={20} top={5} />
+                    <CloseArrow
+                        closeFunction={() => clearForm()}
+                        width={20}
+                        height={20}
+                        top={5}
+                        right={10}
+                    />
                     {edit ? (
                         <Text style={styles.heading}>Edit Board</Text>
                     ) : (

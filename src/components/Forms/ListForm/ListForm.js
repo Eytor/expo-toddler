@@ -46,8 +46,8 @@ class ListForm extends Component {
                         closeFunction={() => clearForm()}
                         width={20}
                         height={20}
-                        right={0}
                         top={5}
+                        right={10}
                     />
                     {edit ? (
                         <Text style={styles.heading}>Edit List</Text>

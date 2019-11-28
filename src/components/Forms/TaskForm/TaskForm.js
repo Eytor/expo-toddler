@@ -4,7 +4,6 @@ import {
     Text,
     TextInput,
     Button,
-    TouchableOpacity,
     Switch,
     Picker,
 } from 'react-native';
@@ -45,7 +44,13 @@ class TaskForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <CloseArrow closeFunction={() => clearForm()} width={20} height={20} top={5} right={0} />
+                    <CloseArrow
+                        closeFunction={() => clearForm()}
+                        width={20}
+                        height={20}
+                        top={5}
+                        right={10}
+                    />
                     {edit ? (
                         <Text style={styles.heading}>Edit Task</Text>
                     ) : (

@@ -17,7 +17,7 @@ const Task = ({
     <View key={id}>
         <Text style={styles.taskHeading}>{name}</Text>
         <View style={[styles.contentWrapper, isFinished ? { borderColor: '#97CC04' } : { borderColor: '#D62828' }]}>
-            <CloseArrow closeFunction={() => removeTask(id)} right={-30} top={0} />
+            <CloseArrow closeFunction={() => removeTask(id)} right={-20} top={0} />
             <Text style={styles.text}>{description}</Text>
             <View style={styles.edit}>
                 <TouchableOpacity

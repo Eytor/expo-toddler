@@ -11,7 +11,7 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
     },
     buttonWrapper: {
-        width: 60,
+        width: 45,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
