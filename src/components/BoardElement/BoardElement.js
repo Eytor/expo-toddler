@@ -32,7 +32,7 @@ const BoardElement = ({
                 <Text>{description}</Text>
             </View>
         </View>
-        <CloseArrow closeFunction={removeItem(id)} />
+        <CloseArrow closeFunction={() => { removeItem(id); }} />
         <View style={styles.edit}>
             <TouchableOpacity
                 onPress={() => openEdit(id, name, description, thumbnailPhoto)}
