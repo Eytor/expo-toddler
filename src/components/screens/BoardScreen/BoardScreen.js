@@ -149,7 +149,7 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
-                    <FilterElement filter={this.filterBoards} />
+                    <FilterElement filter={this.filterBoards} label="Boards" />
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity

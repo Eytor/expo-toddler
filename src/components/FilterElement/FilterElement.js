@@ -3,22 +3,13 @@ import PropTypes from 'prop-types';
 import { TextInput } from 'react-native';
 import styles from './FilterElement.styles';
 
-class FilterElement extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            // filterString: null,
-        };
-    }
-
-    render() {
-        const { filter } = this.props;
-        return <TextInput placeholder="Search here" style={styles.input} onChangeText={(text) => filter(text)} />;
-    }
-}
+const FilterElement = ({ filter, label }) => (
+    <TextInput placeholder={`Search ${label}`} style={styles.input} onChangeText={(text) => filter(text)} />
+);
 
 FilterElement.propTypes = {
     filter: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
 };
 
 export default FilterElement;
