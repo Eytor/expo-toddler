@@ -7,11 +7,11 @@ import {
     ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import * as data from '../../../resources/data.json';
-import ListElement from '../../ListElement/ListElement';
-import ListForm from '../../Forms/ListForm/ListForm';
+import * as data from '../../resources/data.json';
+import ListElement from '../../components/ListElement/ListElement';
+import ListForm from '../../components/Forms/ListForm/ListForm';
+import FilterElement from '../../components/FilterElement/FilterElement';
 import styles from './ListScreen.styles';
-import FilterElement from '../../FilterElement/FilterElement';
 
 class ListScreen extends Component {
     constructor(props) {

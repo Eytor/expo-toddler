@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import BoardScreen from '../components/screens/BoardScreen/BoardScreen';
-import ListScreen from '../components/screens/ListScreen/ListScreen';
-import TaskScreen from '../components/screens/TaskScreen/TaskScreen';
+import BoardScreen from '../screens/BoardScreen/BoardScreen';
+import ListScreen from '../screens/ListScreen/ListScreen';
+import TaskScreen from '../screens/TaskScreen/TaskScreen';
 
 const AppNavigator = createStackNavigator(
     {

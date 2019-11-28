@@ -3,11 +3,11 @@ import {
     Text, View, Modal, TouchableOpacity, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import * as data from '../../../resources/data.json';
-import BoardElement from '../../BoardElement/BoardElement';
-import BoardForm from '../../Forms/BoardForm/BoardForm';
+import * as data from '../../resources/data.json';
+import BoardElement from '../../components/BoardElement/BoardElement';
+import BoardForm from '../../components/Forms/BoardForm/BoardForm';
+import FilterElement from '../../components/FilterElement/FilterElement';
 import styles from './BoardScreen.styles';
-import FilterElement from '../../FilterElement/FilterElement';
 
 class BoardScreen extends Component {
     constructor(props) {
