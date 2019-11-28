@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
-import * as data from '../../db/data.json';
-import Task from '../components/task';
-import TaskForm from '../components/Forms/TaskForm';
+import * as data from '../../../resources/data.json';
+import Task from '../../TaskElement/TaskElement';
+import TaskForm from '../../Forms/TaskForm/TaskForm';
 import styles from './TaskScreen.styles';
 
 class TaskScreen extends Component {
