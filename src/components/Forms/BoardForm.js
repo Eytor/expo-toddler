@@ -37,8 +37,12 @@ class BoardForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity onPress={() => clearForm()}>
-                        <Text style={styles.btnCloseModal}>x</Text>
+                    <TouchableOpacity
+                        style={styles.deleteWrapper}
+                        onPress={() => clearForm()}
+                    >
+                        <View style={styles.arrowTop} />
+                        <View style={styles.arrowBot} />
                     </TouchableOpacity>
                     {edit ? (
                         <Text style={styles.heading}>Edit Board</Text>
@@ -166,6 +170,32 @@ const styles = StyleSheet.create({
     errorInput: {
         borderWidth: 2,
         borderColor: '#D62828',
+    },
+    deleteWrapper: {
+        position: 'absolute',
+        right: 10,
+        top: 35,
+        width: 20,
+        height: 20,
+        zIndex: 100,
+    },
+    arrowTop: {
+        position: 'absolute',
+        width: 2,
+        height: '100%',
+        top: 0,
+        left: 0,
+        transform: [{ rotate: '45deg' }],
+        backgroundColor: '#303030',
+    },
+    arrowBot: {
+        position: 'absolute',
+        width: 2,
+        height: '100%',
+        bottom: 0,
+        left: 0,
+        transform: [{ rotate: '-45deg' }],
+        backgroundColor: '#303030',
     },
 });
 
