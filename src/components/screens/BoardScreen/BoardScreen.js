@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import {
-    Text,
-    View,
-    Modal,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView,
+    Text, View, Modal, TouchableOpacity, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import * as data from '../../db/data.json';
-import BoardElement from '../components/boardElement';
-import BoardForm from '../components/Forms/BoardForm';
+import * as data from '../../../resources/data.json';
+import BoardElement from '../../BoardElement/BoardElement';
+import BoardForm from '../../Forms/BoardForm/BoardForm';
+import styles from './BoardScreen.styles';
+import FilterElement from '../../FilterElement/FilterElement';
 
 class BoardScreen extends Component {
     constructor(props) {
@@ -20,8 +17,11 @@ class BoardScreen extends Component {
         this.openEdit = this.openEdit.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.clearForm = this.clearForm.bind(this);
+        this.filterBoards = this.filterBoards.bind(this);
         this.state = {
             boards: data.boards,
+            filteredBoards: data.boards,
+            filterString: '',
             modalVisible: false,
             edit: false,
             workingId: null,
@@ -44,10 +44,13 @@ class BoardScreen extends Component {
             description,
             thumbnailPhoto,
         });
-        this.setState({
-            boards: newBoard,
-            modalVisible: false,
-        });
+        this.setState(
+            {
+                boards: newBoard,
+                modalVisible: false,
+            },
+            () => this.filterBoards(this.state.filterString),
+        );
     }
 
     editItem(name, description, thumbnailPhoto) {
@@ -59,10 +62,13 @@ class BoardScreen extends Component {
             description,
             thumbnailPhoto,
         };
-        this.setState({
-            boards: newBoard,
-            modalVisible: false,
-        });
+        this.setState(
+            {
+                boards: newBoard,
+                modalVisible: false,
+            },
+            () => this.filterBoards(this.state.filterString),
+        );
         this.clearForm();
     }
 
@@ -84,6 +90,7 @@ class BoardScreen extends Component {
             ...newBoard.slice(0, index).concat(...newBoard.slice(index + 1)),
         ];
         this.setState({ boards: newBoard });
+        this.filterBoards(this.state.filterString);
     }
 
     clearForm() {
@@ -97,9 +104,20 @@ class BoardScreen extends Component {
         });
     }
 
+    filterBoards(text) {
+        const newBoards = [...this.state.boards].filter(
+            (element) => element.name.toLowerCase().includes(text.toLowerCase())
+                || (element.description
+                    && element.description
+                        .toLowerCase()
+                        .includes(text.toLowerCase())),
+        );
+        this.setState({ filteredBoards: newBoards, filterString: text });
+    }
+
     render() {
-        const { boards } = this.state;
-        const boardlist = boards.map((element) => (
+        const { filteredBoards } = this.state;
+        const boardlist = filteredBoards.map((element) => (
             <BoardElement
                 key={element.id}
                 id={element.id}
@@ -131,6 +149,7 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
+                    <FilterElement filter={this.filterBoards} label="Boards" />
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity
@@ -145,30 +164,6 @@ class BoardScreen extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFA400',
-        width: '100%',
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    btn: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        maxHeight: 50,
-        width: '100%',
-        backgroundColor: '#4CB944',
-    },
-    btnText: {
-        fontSize: 16,
-        fontWeight: 'normal',
-        color: '#fff',
-    },
-});
 
 BoardScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
