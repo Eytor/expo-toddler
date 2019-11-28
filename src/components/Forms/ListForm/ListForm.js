@@ -4,10 +4,10 @@ import {
     Text,
     TextInput,
     Button,
-    TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './ListForm.styles';
+import CloseArrow from '../../CloseArrow/CloseArrow';
 
 class ListForm extends Component {
     constructor(props) {
@@ -42,13 +42,13 @@ class ListForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.modalWrapper}>
-                    <TouchableOpacity
-                        style={styles.deleteWrapper}
-                        onPress={() => clearForm()}
-                    >
-                        <View style={styles.arrowTop} />
-                        <View style={styles.arrowBot} />
-                    </TouchableOpacity>
+                    <CloseArrow
+                        closeFunction={() => clearForm()}
+                        width={20}
+                        height={20}
+                        right={0}
+                        top={5}
+                    />
                     {edit ? (
                         <Text style={styles.heading}>Edit List</Text>
                     ) : (

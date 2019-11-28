@@ -7,6 +7,7 @@ export default StyleSheet.create({
         top: 15,
         width: 15,
         height: 15,
+        zIndex: 100,
     },
     arrowTop: {
         position: 'absolute',

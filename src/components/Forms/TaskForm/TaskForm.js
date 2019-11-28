@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import * as data from '../../../resources/data.json';
 import styles from './Taskform.styles';
+import CloseArrow from '../../CloseArrow/CloseArrow';
 
 class TaskForm extends Component {
     constructor(props) {
@@ -44,13 +45,7 @@ class TaskForm extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity
-                        style={styles.deleteWrapper}
-                        onPress={() => clearForm()}
-                    >
-                        <View style={styles.arrowTop} />
-                        <View style={styles.arrowBot} />
-                    </TouchableOpacity>
+                    <CloseArrow closeFunction={() => clearForm()} width={20} height={20} top={5} right={0} />
                     {edit ? (
                         <Text style={styles.heading}>Edit Task</Text>
                     ) : (
