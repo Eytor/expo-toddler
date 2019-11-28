@@ -5,15 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from './TaskElement.styles';
 
-const Task = (props) => {
-    const {
-        id,
-        isFinished,
-        name,
-        description,
-        openEdit,
-        removeTask,
-    } = props;
+const Task = ({id, isFinished, name, description, openEdit, removeTask}) => {
     return (
         <View key={id}>
             <Text style={styles.taskHeading}>{name}</Text>
@@ -32,7 +24,7 @@ const Task = (props) => {
                     >
                         <Image
                             style={{ width: 20, height: 20 }}
-                            source={require('../../assets/cogwheel.png')}
+                            source={require('../../resources/cogwheel.png')}
                         />
                     </TouchableOpacity>
                 </View>

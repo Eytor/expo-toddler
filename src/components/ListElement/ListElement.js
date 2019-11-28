@@ -5,18 +5,7 @@ import {
 } from 'react-native';
 import styles from './ListElement.styles';
 
-const ListElement = (props) => {
-    const {
-        id,
-        name,
-        color,
-        index,
-        length,
-        navigation,
-        openEdit,
-        boardId,
-        removeItem,
-    } = props;
+const ListElement = ({id, name, color, index, length, navigation, openEdit, boardId, removeItem}) => {
     return (
         <View>
             <TouchableOpacity
@@ -37,7 +26,7 @@ const ListElement = (props) => {
                         >
                             <Image
                                 style={{ width: 15, height: 15 }}
-                                source={require('../../assets/cogwheel.png')}
+                                source={require('../../resources/cogwheel.png')}
                             />
                         </TouchableOpacity>
                     </View>

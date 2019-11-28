@@ -5,14 +5,7 @@ import {
 } from 'react-native';
 import styles from './BoardElement.styles';
 
-const BoardElement = ({
-    id,
-    name,
-    description,
-    thumbnailPhoto,
-    removeItem,
-    openEdit,
-    navigation,
+const BoardElement = ({id, name, description, thumbnailPhoto, removeItem, openEdit, navigation
 }) => (
     <TouchableOpacity
         style={styles.boardListItem}
@@ -44,7 +37,7 @@ const BoardElement = ({
             >
                 <Image
                     style={{ width: 20, height: 20 }}
-                    source={require('../../assets/cogwheel.png')}
+                    source={require('../../resources/cogwheel.png')}
                 />
             </TouchableOpacity>
         </View>
