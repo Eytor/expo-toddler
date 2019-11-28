@@ -11,6 +11,7 @@ import * as data from '../../../resources/data.json';
 import BoardElement from '../../BoardElement/BoardElement';
 import BoardForm from '../../Forms/BoardForm/BoardForm';
 import styles from './BoardScreen.styles';
+import FilterElement from '../../FilterElement/FilterElement';
 
 class BoardScreen extends Component {
     constructor(props) {
@@ -131,6 +132,7 @@ class BoardScreen extends Component {
                     />
                 </Modal>
                 <View style={styles.container}>
+                    <FilterElement filter={(input) => console.log(input)} />
                     <ScrollView>{boardlist}</ScrollView>
                 </View>
                 <TouchableOpacity
