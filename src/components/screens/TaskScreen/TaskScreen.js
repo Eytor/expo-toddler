@@ -168,7 +168,7 @@ class TaskScreen extends Component {
                 </Modal>
 
                 <View style={styles.container}>
-                    <FilterElement filter={this.filterTasks} />
+                    <FilterElement filter={this.filterTasks} label="Tasks" />
                     <ScrollView>{list}</ScrollView>
                 </View>
                 <TouchableOpacity

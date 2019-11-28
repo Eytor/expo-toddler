@@ -167,7 +167,7 @@ class ListScreen extends Component {
                             clearForm={this.clearForm}
                         />
                     </Modal>
-                    <FilterElement filter={this.filterLists} />
+                    <FilterElement filter={this.filterLists} label="Lists" />
                     <ScrollView style={styles.listItemContainer}>{list}</ScrollView>
                 </View>
                 <TouchableOpacity
