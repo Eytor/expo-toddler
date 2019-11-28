@@ -168,7 +168,6 @@ class ListScreen extends Component {
                         />
                     </Modal>
                     <FilterElement filter={this.filterLists} label="Lists" />
-                    <Text style={styles.heading}>Lists</Text>
                     <ScrollView style={styles.listItemContainer}>{list}</ScrollView>
                 </View>
                 <TouchableOpacity

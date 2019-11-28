@@ -169,7 +169,6 @@ class TaskScreen extends Component {
 
                 <View style={styles.container}>
                     <FilterElement filter={this.filterTasks} label="Tasks" />
-                    <Text style={styles.heading}>Your tasks</Text>
                     <ScrollView>{list}</ScrollView>
                 </View>
                 <TouchableOpacity
