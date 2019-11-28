@@ -3,7 +3,6 @@ import {
     View,
     Text,
     TouchableOpacity,
-    StyleSheet,
     Modal,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -11,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as data from '../../db/data.json';
 import Task from '../components/task';
 import TaskForm from '../components/Forms/TaskForm';
+import styles from './TaskScreen.styles';
 
 class TaskScreen extends Component {
     constructor(props) {
@@ -173,34 +173,5 @@ TaskScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFA400',
-        width: '100%',
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    btn: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        maxHeight: 50,
-        width: '100%',
-        backgroundColor: '#4CB944',
-    },
-    btnText: {
-        fontSize: 16,
-        fontWeight: 'normal',
-        color: '#fff',
-    },
-    heading: {
-        fontSize: 24,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-});
 
 export default TaskScreen;

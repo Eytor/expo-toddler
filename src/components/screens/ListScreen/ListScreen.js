@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     Modal,
     TouchableOpacity,
     ScrollView,
@@ -11,6 +10,7 @@ import PropTypes from 'prop-types';
 import * as data from '../../db/data.json';
 import ListElement from '../components/listElement';
 import ListForm from '../components/Forms/ListForm';
+import styles from './ListScreen.styles';
 
 class ListScreen extends Component {
     constructor(props) {
@@ -167,38 +167,6 @@ class ListScreen extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFA400',
-        width: '100%',
-        padding: 30,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    heading: {
-        fontSize: 24,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    listItemContainer: {
-        padding: 15,
-    },
-    btn: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        maxHeight: 50,
-        width: '100%',
-        backgroundColor: '#4CB944',
-    },
-    btnText: {
-        fontSize: 16,
-        fontWeight: 'normal',
-        color: '#fff',
-    },
-});
 ListScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
